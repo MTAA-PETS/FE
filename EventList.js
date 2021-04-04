@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { View } from 'react-native';
-import { LinearTextGradient } from "react-native-text-gradient";
 //import LinearGradient from 'react-native-linear-gradient';
 import { LinearGradient } from 'expo-linear-gradient';
 //import { LinearGradient } from 'expo';
@@ -10,24 +9,21 @@ class EventList extends Component {
     render(){
         return (
             //<Text>Sejusky</Text>
-            <View>
+
                 <View style={styles.container}>
                     <LinearGradient
                         colors={['#5EF9D4', 'white']}
                         style={styles.background}>
                     </LinearGradient>
-                </View>
-                <View>
-                    <LinearTextGradient
-                        //locations={[0, 1]}
-                        //id='title'
-                        style={styles.title}
-                        colors={['#3253FF', 'white']}
+
+                    <LinearGradient
+                        // Button Linear Gradient
+                        colors={['transparent', 'white']}
+                        //style={styles.button}
                         >
-                        Pets
-                    </LinearTextGradient>
+                        <Text style={styles.title}>Pets</Text>
+                    </LinearGradient>
                 </View>
-            </View>
         );
     }
 }
@@ -51,11 +47,11 @@ const styles = StyleSheet.create({
       borderRadius: 5,
     },
     title: {
-      backgroundColor: 'transparent',
+      //backgroundColor: 'transparent',
       alignItems: 'center',
-      fontSize: 25,
-      fontFamily: 'Over the Rainbow',
-      color: 'white',
+      fontSize: 45,
+      fontFamily: 'Lucida Handwriting',
+      color: '#3253FF',
     },
   });
 
