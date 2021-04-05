@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 //import { LinearGradient } from 'expo';
 
-class EventList extends Component {
+class RegScreen extends Component {
     render(){
         return (
             //<Text>Sejusky</Text>
@@ -18,10 +18,10 @@ class EventList extends Component {
 
                     <LinearGradient
                         // Button Linear Gradient
-                        colors={['transparent', 'white']}
+                        colors={['transparent', 'black']}
                         //style={styles.button}
                         >
-                        <Text style={styles.title}>Pets</Text>
+                        <Text style={styles.title}>Registration</Text>
                     </LinearGradient>
                 </View>
         );
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default EventList;
+export default RegScreen;

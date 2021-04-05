@@ -1,9 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler'
 import React from 'react';
-import EventList from './EventList';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'expo-status-bar';
+import HomeScreen from './HomeScreen';
+import RegScreen from './RegScreen';
+import LogScreen from './LogScreen';
 
-export default function App() {
-  return (
-    <EventList />
-  );
+const Stack = createStackNavigator()
+
+class App extends React.Component{
+  render(){
+    return (
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen 
+            name = "Homepage"
+            component = { HomeScreen }
+          />
+          <Stack.Screen 
+            name = "Registration"
+            component = { RegScreen }
+          />
+          <Stack.Screen 
+            name = "Login"
+            component = { LogScreen }
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
+
+export default App;
