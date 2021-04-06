@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
                         <Text style={styles.title}>Pets</Text>
                       </View>
                       <View style={styles.box, styles.box_half}>
-                        <Image source={require('./assets/logo.png')} alt={"logo"} width = "box_height" height = "box_height"/> 
+                        <Image source={require('./assets/logo.png')} alt={"logo"} style={{flex: 1, width: '90%', height: 100, resizeMode: 'contain'}} /> 
                       </View>
                       <View style={styles.box, styles.box_quartersecond}>
                         <TouchableOpacity style = { styles.button} onPress={() => this.props.navigation.navigate('Login')}>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems:'center',
-      borderRadius: 100
+      borderRadius: 30
     },
     button: {
       width: '50%',
