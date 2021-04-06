@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
                         <Text style={styles.title}>Pets</Text>
                       </View>
                       <View style={styles.box, styles.box_half}>
-                        <Image source={require('./assets/logo.png')} alt={"logo"} width = "300" height = "300"/> 
+                        <Image source={require('./assets/logo.png')} alt={"logo"} width = "box_height" height = "box_height"/> 
                       </View>
                       <View style={styles.box, styles.box_quartersecond}>
                         <TouchableOpacity style = { styles.button} onPress={() => this.props.navigation.navigate('Login')}>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     title: {
       alignItems: 'center',
       fontSize: 95,
-      fontFamily: 'Lucida Handwriting',
+      fontFamily: 'Lucida',
       color: 'black',
     },
     gradient: {
