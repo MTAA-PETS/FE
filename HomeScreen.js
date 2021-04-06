@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import logo from './assets/logo.png';
+//import logo from './assets/logo.png';
 
 var { height } = Dimensions.get('window');
 
@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
                         <Text style={styles.title}>Pets</Text>
                       </View>
                       <View style={styles.box, styles.box_half}>
-                        <img src={logo} alt={"logo"} width = "300" height = "300"/> 
+                        <Image source={require('./assets/logo.png')} alt={"logo"} width = "300" height = "300"/> 
                       </View>
                       <View style={styles.box, styles.box_quartersecond}>
                         <TouchableOpacity style = { styles.button} onPress={() => this.props.navigation.navigate('Login')}>

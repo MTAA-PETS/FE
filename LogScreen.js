@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text , Image} from 'react-native';
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -11,7 +11,7 @@ class LogScreen extends React.Component {
                         colors={['#5EF9D4', 'white']}
                         style={styles.background}>
                     </LinearGradient>
-
+                    <Image source={require('./assets/logo.png')} alt={"logo"} width = "300" height = "300"/> ;
                     <LinearGradient
                         colors={['transparent', 'black']}
                         >
