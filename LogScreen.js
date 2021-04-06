@@ -37,21 +37,19 @@ class LogScreen extends React.Component {
 
 
   prihlas(){
-    const url = 'https://mtaa-pets.herokuapp.com/pets/?breed=Jašterica krátkohlavá';
+    const url = 'https://mtaa-pets.herokuapp.com/user/1/';
     const options = {
       method: 'GET',
-      mode: 'cors',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json;charset=UTF-8',
-        'Access-Control-Allow-Origin': '*'
       },
   };
     fetch(url, options)
       .then(response => {
         console.log(response);
       });
-}
+  }
 }
 
 const styles = StyleSheet.create({
