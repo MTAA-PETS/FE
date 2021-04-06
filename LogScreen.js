@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text , Image} from 'react-native';
+import { StyleSheet, Text , Image , TouchableOpacity} from 'react-native';
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -11,16 +11,49 @@ class LogScreen extends React.Component {
                         colors={['#5EF9D4', 'white']}
                         style={styles.background}>
                     </LinearGradient>
-                    <Image source={require('./assets/logo.png')} alt={"logo"} width = "300" height = "300"/> ;
+
                     <LinearGradient
                         colors={['transparent', 'black']}
                         >
                         <Text style={styles.title}>LOGIN</Text>
                     </LinearGradient>
+                    <TouchableOpacity style = { styles.button} onPress={() => this.prihlas()}>
+                      <LinearGradient style = { styles.gradient } colors={['#3D66F5', '#76FFEF']}>
+                        <Text style = { styles.buttonText }>PRIHLAS MA CHACHA</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
                 </View>
         );
     }
+
+    //body: JSON.stringify({
+     // "nick/email": "skus@1ka.com",
+     // "password": "skuska1"
+    //})method: 'GET',
+      //headers: {
+       // Accept: 'application/json',
+        //'Content-Type': 'application/json'
+      //},
+
+
+  prihlas(){
+    const url = 'https://mtaa-pets.herokuapp.com/pets/?breed=Jašterica krátkohlavá';
+    const options = {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*'
+      },
+  };
+    fetch(url, options)
+      .then(response => {
+        console.log(response);
+      });
 }
+}
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -44,7 +77,7 @@ const styles = StyleSheet.create({
       //backgroundColor: 'transparent',
       alignItems: 'center',
       fontSize: 45,
-      fontFamily: 'Lucida Handwriting',
+      fontFamily: 'Lucida',
       color: '#3253FF',
     },
   });
