@@ -42,13 +42,12 @@ class LogScreen extends React.Component {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json'
       },
-  };
+    };
     fetch(url, options)
-      .then(response => {
-        console.log(response);
-      });
+      .then(response => response.json())
+      .then(jsondata => console.log(jsondata))
   }
 }
 
