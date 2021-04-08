@@ -12,17 +12,8 @@ var box_count = 3;
 var box_height = height / box_count;
 var start = width / 6;
 
-var ApiUtils = {  
-  checkStatus: function(response) {
-    if (response.ok) {
-        return response;
-      } else {
-        let error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-      }
-    }
-  };
+export var idcko = 0;
+
 
 class LogScreen extends React.Component{
     render(){
@@ -102,13 +93,20 @@ class LogScreen extends React.Component{
       })
     };
     fetch(url, options)
-      .then(ApiUtils.checkStatus)
-      .then(response => response.json())
-      .catch(e => e)
-      .then(jsondata => console.log(jsondata))
+        .then(result => {
+            if (!result.ok) throw result;
+            return result.json();
+        })
+        .then(result => {
+            //Successful request processing
+            idcko = result['id'];
+            console.log(result);
+        }).catch(error => {
+            //Here is still promise
+            console.log(error);
+        })
     }
 }
-
 
 const styles = StyleSheet.create({
   container:{
