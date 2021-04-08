@@ -88,7 +88,6 @@ class LogScreen extends React.Component{
       </Formik> 
       );      
     }
-<<<<<<< Updated upstream
   login(values){
     const url = 'https://mtaa-pets.herokuapp.com/user/login/';
     const options = {
@@ -96,17 +95,6 @@ class LogScreen extends React.Component{
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'text/plain'
-=======
-
-  prihlas(){
-    const url = 'http://127.0.0.1:8000/pets/?breed=Jašterica krátkohlavá';
-    const options = {
-      method: 'GET',
-      //mode: 'no-cors',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8'
->>>>>>> Stashed changes
       },
       body: JSON.stringify({
         'nick/email': values['emailnick'],
@@ -114,7 +102,6 @@ class LogScreen extends React.Component{
       })
     };
     fetch(url, options)
-<<<<<<< Updated upstream
       .then(ApiUtils.checkStatus)
       .then(response => response.json())
       .catch(e => e)
@@ -122,16 +109,6 @@ class LogScreen extends React.Component{
     }
 }
 
-=======
-      .then(response => response.json())
-      .then(jsondata => console.log(jsondata))
-}
-}
-
-//.then(response => {
-  //console.log(response);
-//});
->>>>>>> Stashed changes
 
 const styles = StyleSheet.create({
   container:{
