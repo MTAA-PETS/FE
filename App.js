@@ -7,6 +7,7 @@ import HomeScreen from './HomeScreen';
 import RegScreen from './RegScreen';
 import LogScreen from './LogScreen';
 import MainScreen from './MainScreen';
+import Daco from './daco.js';
 
 const Stack = createStackNavigator()
 
@@ -17,7 +18,7 @@ class App extends React.Component{
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen 
             name = "Homepage"
-            component = { HomeScreen }
+            component = { Daco }
           />
           <Stack.Screen 
             name = "Registration"

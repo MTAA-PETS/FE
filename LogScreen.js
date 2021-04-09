@@ -25,93 +25,93 @@ class LogScreen extends React.Component{
   updateerror(){
     this.setState({errormessage: "Zlé hesielko alebo ímejlík"})
   }
-    render(){
-      return(
-        <Formik
-        initialValues={{ 
-          emailnick: '',
-          password: '' 
-        }}
-        onSubmit={values => this.login(values)}
-       >
-        {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
-          <View style={styles.formContainer}>
-            <LinearGradient
-                        colors={['#5EF9D4', 'white']}
-                        style = { styles.background }>
-              <View style={styles.box, styles.box_quarterfirst} >
-                <Text style={styles.title}>Prihlásenie</Text>
-                <Text style={styles.undertitle}>Vitajte späť!</Text>
-              </View>
-              <View style={styles.box, styles.box_half}>
-                <Input
-                  leftIcon={{ type: 'ionicon', name: 'person-outline', color: 'grey'}}
-                  value={values.emailnick}
-                  style={styles.inputStyle}
-                  onChangeText={handleChange('emailnick')}
-                  onBlur={() => setFieldTouched('emailnick')}
-                  placeholder="E-mail alebo nick"
-                />   
-                {touched.email && errors.email &&
-                    <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
-                }
-                <Input
-                  value={values.password}
-                  style={styles.inputStyle}
-                  onChangeText={handleChange('password')}
-                  placeholder="Heslo"
-                  onBlur={() => setFieldTouched('password')}
-                  secureTextEntry={true}
-                  leftIcon={{ type: 'ionicon', name: 'key-outline', color:'grey'}}
-                />
-                {touched.password && errors.password &&
-                  <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
-                }
-                <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage}</Text>
-              </View>
-              <View style={styles.box, styles.box_quartersecond}>
-                <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
-                      <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
-                          <Text style={styles.btntext}>PRIHLÁSENIE</Text>
-                          <Ionicons style = {styles.icon} name="log-in-outline" size={20} color="white" resizeMode="contain" />
-                      </LinearGradient>
-                </TouchableOpacity>
-                <Text style={styles.undertitle}>Ešte nemáte účet? <Text style={{fontWeight:'bold'}} onPress={() => this.props.navigation.navigate('Registration')}>Registrácia</Text></Text>
-              </View>
-            </LinearGradient>  
-          </View>
-        )}
-      </Formik> 
-      );      
-    }
-  login(values){
-    const url = 'https://mtaa-pets.herokuapp.com/user/login/';
-    const options = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'text/plain'
-      },
-      body: JSON.stringify({
-        'nick/email': values['emailnick'],
-        'password': values['password'],
+  render(){
+    return(
+      <Formik
+      initialValues={{ 
+        emailnick: '',
+        password: '' 
+      }}
+      onSubmit={values => this.login(values)}
+     >
+      {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
+        <View style={styles.formContainer}>
+          <LinearGradient
+                      colors={['#5EF9D4', 'white']}
+                      style = { styles.background }>
+            <View style={styles.box, styles.box_quarterfirst} >
+              <Text style={styles.title}>Prihlásenie</Text>
+              <Text style={styles.undertitle}>Vitajte späť!</Text>
+            </View>
+            <View style={styles.box, styles.box_half}>
+              <Input
+                leftIcon={{ type: 'ionicon', name: 'person-outline', color: 'grey'}}
+                value={values.emailnick}
+                style={styles.inputStyle}
+                onChangeText={handleChange('emailnick')}
+                onBlur={() => setFieldTouched('emailnick')}
+                placeholder="E-mail alebo nick"
+              />   
+              {touched.email && errors.email &&
+                  <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
+              }
+              <Input
+                value={values.password}
+                style={styles.inputStyle}
+                onChangeText={handleChange('password')}
+                placeholder="Heslo"
+                onBlur={() => setFieldTouched('password')}
+                secureTextEntry={true}
+                leftIcon={{ type: 'ionicon', name: 'key-outline', color:'grey'}}
+              />
+              {touched.password && errors.password &&
+                <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
+              }
+              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage}</Text>
+            </View>
+            <View style={styles.box, styles.box_quartersecond}>
+              <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
+                    <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
+                        <Text style={styles.btntext}>PRIHLÁSENIE</Text>
+                        <Ionicons style = {styles.icon} name="log-in-outline" size={20} color="white" resizeMode="contain" />
+                    </LinearGradient>
+              </TouchableOpacity>
+              <Text style={styles.undertitle}>Ešte nemáte účet? <Text style={{fontWeight:'bold'}} onPress={() => this.props.navigation.navigate('Registration')}>Registrácia</Text></Text>
+            </View>
+          </LinearGradient>  
+        </View>
+      )}
+    </Formik> 
+    );      
+  }
+  gin(values){
+  const url = 'https://mtaa-pets.herokuapp.com/user/login/';
+  const options = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'text/plain'
+    },
+    body: JSON.stringify({
+      'nick/email': values['emailnick'],
+      'password': values['password'],
+    })
+  };
+  fetch(url, options)
+      .then(result => {
+          if (!result.ok) throw result;
+          return result.json();
       })
-    };
-    fetch(url, options)
-        .then(result => {
-            if (!result.ok) throw result;
-            return result.json();
-        })
-        .then(result => {
-            idcko = result['id'];
-            console.log(result);
-            this.props.navigation.navigate('MainScreen');
-        })
-        .catch(error => {
-            console.log(error);
-            this.updateerror();
-        })
-    }
+      .then(result => {
+          idcko = result['id'];
+          console.log(result);
+          this.props.navigation.navigate('MainScreen');
+      })
+      .catch(error => {
+          console.log(error);
+          this.updateerror();
+      })
+  }
 }
 
 const styles = StyleSheet.create({
