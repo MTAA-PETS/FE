@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   box_quarterfirst: {
     flex: 0.25,
-    alignItems: 'left',
+    alignItems: 'flex-start',
     padding: start,
     justifyContent:'center',
   },
@@ -170,17 +170,17 @@ const styles = StyleSheet.create({
     padding : 50
   },
   title: {
-    alignItems: 'left',
+    alignItems: 'flex-start',
     fontSize: 30,
     margin: 8,
-    fontFamily: 'Lucida',
+    //fontFamily: 'Lucida',
     color: 'black',
   },
   undertitle: {
-    alignItems: 'left',
+    alignItems: 'flex-start',
     fontSize: 15,
     margin: 8,
-    fontFamily: 'Lucida',
+    //fontFamily: 'Lucida',
     color: 'grey',
   },
 });

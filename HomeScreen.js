@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     title: {
       alignItems: 'center',
       fontSize: 95,
-      fontFamily: 'Lucida',
+      //fontFamily: 'Lucida',
       color: 'black',
     },
     gradient: {
