@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TextInput, Alert, StyleSheet, Text, Button, View, TouchableOpacity, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
 import { Input } from 'react-native-elements';
 
 var { height } = Dimensions.get('window');
@@ -41,7 +41,7 @@ class LogScreen extends React.Component{
               </View>
               <View style={styles.box, styles.box_half}>
                 <Input
-                  leftIcon={{ type: 'font-awesome', name: 'user', color: 'grey'}}
+                  leftIcon={{ type: 'ionicon', name: 'person-outline', color: 'grey'}}
                   value={values.emailnick}
                   style={inputStyle}
                   onChangeText={handleChange('emailnick')}
@@ -58,7 +58,7 @@ class LogScreen extends React.Component{
                   placeholder="Heslo"
                   onBlur={() => setFieldTouched('password')}
                   secureTextEntry={true}
-                  leftIcon={{ type: 'font-awesome', name: 'key', color:'grey'}}
+                  leftIcon={{ type: 'ionicon', name: 'key-outline', color:'grey'}}
                 />
                 {touched.password && errors.password &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
@@ -68,7 +68,7 @@ class LogScreen extends React.Component{
                 <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
                       <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
                           <Text style={styles.btntext}>PRIHLÁSENIE</Text>
-                          <Icon style = {styles.icon} name="sign-in" size={20} resizeMode="contain" />
+                          <Ionicons style = {styles.icon} name="log-in-outline" size={20} color="white" resizeMode="contain" />
                       </LinearGradient>
                 </TouchableOpacity>
                 <Text style={styles.undertitle}>Ešte nemáte účet? <Text style={{fontWeight:'bold'}} onPress={() => this.props.navigation.navigate('Registration')}>Registrácia</Text></Text>
@@ -98,11 +98,10 @@ class LogScreen extends React.Component{
             return result.json();
         })
         .then(result => {
-            //Successful request processing
             idcko = result['id'];
             console.log(result);
-        }).catch(error => {
-            //Here is still promise
+        })
+        .catch(error => {
             console.log(error);
         })
     }
