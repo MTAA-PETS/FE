@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './HomeScreen';
 import RegScreen from './RegScreen';
 import LogScreen from './LogScreen';
+import MainScreen from './MainScreen';
 
 const Stack = createStackNavigator()
 
@@ -25,6 +26,10 @@ class App extends React.Component{
           <Stack.Screen 
             name = "Login"
             component = { LogScreen }
+          />
+          <Stack.Screen 
+            name = "MainScreen"
+            component = { MainScreen }
           />
         </Stack.Navigator>
       </NavigationContainer>

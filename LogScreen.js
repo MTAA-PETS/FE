@@ -12,16 +12,20 @@ var box_count = 3;
 var box_height = height / box_count;
 var start = width / 6;
 
-export var idcko = 0;
+//export 
+global.idcko = 0;
 
+//skus@1ka.com
 
 class LogScreen extends React.Component{
+  constructor(){
+    super()
+    this.state={errormessage: ""}
+  }
+  updateerror(){
+    this.setState({errormessage: "Zlé hesielko alebo ímejlík"})
+  }
     render(){
-      const inputStyle = {
-        padding: 12,
-        marginBottom: 5,
-        fontSize: 15,
-      };
       return(
         <Formik
         initialValues={{ 
@@ -43,7 +47,7 @@ class LogScreen extends React.Component{
                 <Input
                   leftIcon={{ type: 'ionicon', name: 'person-outline', color: 'grey'}}
                   value={values.emailnick}
-                  style={inputStyle}
+                  style={styles.inputStyle}
                   onChangeText={handleChange('emailnick')}
                   onBlur={() => setFieldTouched('emailnick')}
                   placeholder="E-mail alebo nick"
@@ -53,7 +57,7 @@ class LogScreen extends React.Component{
                 }
                 <Input
                   value={values.password}
-                  style={inputStyle}
+                  style={styles.inputStyle}
                   onChangeText={handleChange('password')}
                   placeholder="Heslo"
                   onBlur={() => setFieldTouched('password')}
@@ -63,6 +67,7 @@ class LogScreen extends React.Component{
                 {touched.password && errors.password &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
                 }
+                <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage}</Text>
               </View>
               <View style={styles.box, styles.box_quartersecond}>
                 <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
@@ -100,9 +105,11 @@ class LogScreen extends React.Component{
         .then(result => {
             idcko = result['id'];
             console.log(result);
+            this.props.navigation.navigate('MainScreen');
         })
         .catch(error => {
             console.log(error);
+            this.updateerror();
         })
     }
 }
@@ -182,6 +189,13 @@ const styles = StyleSheet.create({
     margin: 8,
     //fontFamily: 'Lucida',
     color: 'grey',
+  },
+  inputStyle: {
+    padding: 12,
+    marginBottom: 5,
+    fontSize: 15,
+    backgroundColor: 'white',
+    borderRadius: 10,
   },
 });
 
