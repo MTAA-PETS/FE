@@ -12,10 +12,8 @@ var box_count = 3;
 var box_height = height / box_count;
 var start = width / 6;
 
-//export 
 global.idcko = 0;
 
-//skus@1ka.com
 
 class LogScreen extends React.Component{
   constructor(){
@@ -23,7 +21,7 @@ class LogScreen extends React.Component{
     this.state={errormessage: ""}
   }
   updateerror(){
-    this.setState({errormessage: "Zlé hesielko alebo ímejlík"})
+    this.setState({errormessage: "Nesprávny e-mail alebo heslo"})
   }
   render(){
     return(
@@ -84,34 +82,34 @@ class LogScreen extends React.Component{
     </Formik> 
     );      
   }
-  gin(values){
-  const url = 'https://mtaa-pets.herokuapp.com/user/login/';
-  const options = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'text/plain'
-    },
-    body: JSON.stringify({
-      'nick/email': values['emailnick'],
-      'password': values['password'],
-    })
-  };
-  fetch(url, options)
-      .then(result => {
-          if (!result.ok) throw result;
-          return result.json();
+  login(values){
+    const url = 'https://mtaa-pets.herokuapp.com/user/login/';
+    const options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'text/plain'
+      },
+      body: JSON.stringify({
+        'nick/email': values['emailnick'],
+        'password': values['password'],
       })
-      .then(result => {
-          idcko = result['id'];
-          console.log(result);
-          this.props.navigation.navigate('MainScreen');
-      })
-      .catch(error => {
-          console.log(error);
-          this.updateerror();
-      })
-  }
+    };
+    fetch(url, options)
+        .then(result => {
+            if (!result.ok) throw result;
+            return result.json();
+        })
+        .then(result => {
+            idcko = result['id'];
+            console.log(result);
+            this.props.navigation.navigate('MainScreen');
+        })
+        .catch(error => {
+            console.log(error);
+            this.updateerror();
+        })
+    }
 }
 
 const styles = StyleSheet.create({
@@ -163,11 +161,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 16,
     color: 'white',
-    flex:.8,
+    flex:.6,
   },
   icon: {
     color: "white",
-    flex:.2 ,
+    flex:.1 ,
   },
   text: {
     color: 'white',
