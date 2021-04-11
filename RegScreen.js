@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { TextInput, Alert, StyleSheet, Text, Button, View, TouchableOpacity, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Formik } from 'formik';
+import { ErrorMessage, Formik } from 'formik';
 import { Ionicons } from '@expo/vector-icons';
 import { Input } from 'react-native-elements';
 
@@ -16,9 +16,21 @@ class RegScreen extends Component {
   constructor(){
     super()
     this.state={errormessage: ""}
+    this.state={errormessage2: ""}
+    this.state={errormessage3: ""}
+    this.state={errormessage4: ""}
   }
   updateerror(){
-    this.setState({errormessage: "Zlé hesielko alebo ímejlík"})
+    this.setState({errormessage: "Heslá sa nezhodujú"})
+  }
+  updateerrormail(){
+    this.setState({errormessage2: "Nesprávny tvar emailu"})
+  }
+  updateerrormailduplicate(){
+    this.setState({errormessage3: "Tento email alebo nick už existuje"})
+  }
+  updateerrordate(){
+    this.setState({errormessage4: "Nemáš 18 ty čpavok"})
   }
   
   render(){
@@ -50,6 +62,8 @@ class RegScreen extends Component {
               {touched.email && errors.email &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
               }
+              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage2}</Text>
+              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage3}</Text>
               <Input
                 leftIcon={{ type: 'ionicon', name: 'person-circle-outline', color: 'grey'}}
                 value={values.nick}
@@ -75,7 +89,6 @@ class RegScreen extends Component {
               {touched.password && errors.password &&
                 <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
               }
-              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage}</Text>
               <Input
                 value={values.password2}
                 style={styles.inputStyle}
@@ -103,6 +116,7 @@ class RegScreen extends Component {
               {touched.birth && errors.birth &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.birth}</Text>
               }
+              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage4}</Text>
             </View>
             <View style={styles.box, styles.box_quartersecond}>
               <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
@@ -120,7 +134,11 @@ class RegScreen extends Component {
     );      
   }
   login(values){
-    const url = 'https://mtaa-pets.herokuapp.com/user/login/';
+    if (values['password'] != values['password2']){
+      this.updateerror();
+      return 0;
+    }
+    const url = 'https://mtaa-pets.herokuapp.com/user/signup/';
     const options = {
       method: 'POST',
       headers: {
@@ -128,7 +146,9 @@ class RegScreen extends Component {
         'Content-Type': 'text/plain'
       },
       body: JSON.stringify({
-        'nick/email': values['emailnick'],
+        'nick': values['nick'],
+        'email': values['email'],
+        'birth': values['birth'],
         'password': values['password'],
       })
     };
@@ -143,8 +163,18 @@ class RegScreen extends Component {
             this.props.navigation.navigate('MainScreen');
         })
         .catch(error => {
-            console.log(error);
-            this.updateerror();
+          console.log(error);
+          //console.error(error);
+          //console.log(error.fieldMessages);
+          //error.text().then( errorMes => {
+            //this.props.dispatch(console.log(errorMes))
+          //})
+            //daco = error.json();
+            //email = daco['errors']
+            if(error['status'] == 403){
+              this.updateerrormailduplicate();
+            }
+            //this.updateerror();
         })
     }
 }

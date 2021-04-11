@@ -8,9 +8,51 @@ var { height } = Dimensions.get('window');
 
 var box_count = 2;
 var box_height = height / box_count;
-global.spieces = "";
+var url = ""
 
-function MainScreen(props) {
+function changeUrl(){
+    if(global.species == 'Cicavce'){
+        url = 'https://mtaa-pets.herokuapp.com/pets/?species=cicavec';
+    }
+    if(global.species == 'Plazy'){
+        url = 'https://mtaa-pets.herokuapp.com/pets/?species=plaz';
+    }
+    if(global.species == 'Obojživelníky'){
+        url = 'https://mtaa-pets.herokuapp.com/pets/?species=obojživelník';
+    }
+    if(global.species == 'Hmyz'){
+        url = 'https://mtaa-pets.herokuapp.com/pets/?species=hmyz';
+    }
+    if(global.species == 'Ryby'){
+        url = 'https://mtaa-pets.herokuapp.com/pets/?species=ryba';
+    }
+    if(global.species == 'Vtáky'){
+        url = 'https://mtaa-pets.herokuapp.com/pets/?species=vták';
+    }
+    const options = {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'text/plain'
+        },
+      };
+    fetch(url, options)
+        .then(result => {
+            if (!result.ok) throw result;
+            return result.json();
+        })
+        .then(result => {
+            idcko = result['id'];
+            console.log(result);
+            this.props.navigation.navigate('MainScreen');
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
+  }
+
+function SpeciesScreen(props) {
   
     const [items] = React.useState([
       { name: 'Cicavce', source: require('./assets/cicavce.jpg')},
@@ -20,7 +62,7 @@ function MainScreen(props) {
       { name: 'Ryby', source: require('./assets/ryby.jpg')},
       { name: 'Vtáky', source: require('./assets/vtaky.jpg')},
     ]);
-  
+    console.log(global.species);
     return (
         <View style = {styles.container}>
             <LinearGradient
@@ -41,7 +83,7 @@ function MainScreen(props) {
                     spacing={20}
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
-                        <TouchableOpacity onPress={() => { global.species=item.name; props.navigation.navigate('Species')}}>
+                        <TouchableOpacity onPress={() => {global.spieces = item.name; changeUrl(); props.navigation.navigate('Species')}}>
                             <Image source={item.source} style={{flex: 1, width: '90%', height: 100, resizeMode: 'contain'}} /> 
                             <Text style={styles.itemName}>{item.name}</Text>
                         </TouchableOpacity>
@@ -53,6 +95,7 @@ function MainScreen(props) {
         </View>
     );
   }
+  
   
   const styles = StyleSheet.create({
     container: {
@@ -119,4 +162,4 @@ function MainScreen(props) {
     },
   });
 
-export default MainScreen;
+export default SpeciesScreen;
