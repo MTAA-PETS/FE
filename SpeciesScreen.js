@@ -1,5 +1,4 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React ,{ useState, useEffect }  from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,25 +9,12 @@ var box_count = 2;
 var box_height = height / box_count;
 var url = ""
 
-function changeUrl(){
-    if(global.species == 'Cicavce'){
-        url = 'https://mtaa-pets.herokuapp.com/pets/?species=cicavec';
-    }
-    if(global.species == 'Plazy'){
-        url = 'https://mtaa-pets.herokuapp.com/pets/?species=plaz';
-    }
-    if(global.species == 'Obojživelníky'){
-        url = 'https://mtaa-pets.herokuapp.com/pets/?species=obojživelník';
-    }
-    if(global.species == 'Hmyz'){
-        url = 'https://mtaa-pets.herokuapp.com/pets/?species=hmyz';
-    }
-    if(global.species == 'Ryby'){
-        url = 'https://mtaa-pets.herokuapp.com/pets/?species=ryba';
-    }
-    if(global.species == 'Vtáky'){
-        url = 'https://mtaa-pets.herokuapp.com/pets/?species=vták';
-    }
+global.kind=""
+
+function getSpecies(){
+    const [data, setData] = useState([])
+    url = 'https://mtaa-pets.herokuapp.com/pets/?species='+global.species;
+    console.log(url)
     const options = {
         method: 'GET',
         headers: {
@@ -36,33 +22,39 @@ function changeUrl(){
           'Content-Type': 'text/plain'
         },
       };
-    fetch(url, options)
-        .then(result => {
-            if (!result.ok) throw result;
-            return result.json();
-        })
-        .then(result => {
-            idcko = result['id'];
-            console.log(result);
-            this.props.navigation.navigate('MainScreen');
-        })
-        .catch(error => {
-            console.log(error);
-        })
 
+    useEffect(() => {
+     fetch(url, options)
+    .then(response => response.json())
+    .then(data => setData(data))
+    },[]);
+
+    if (data != '[]' && data != undefined){
+      return data;
+    }
   }
 
+
 function SpeciesScreen(props) {
-  
-    const [items] = React.useState([
-      { name: 'Cicavce', source: require('./assets/cicavce.jpg')},
-      { name: 'Plazy', source: require('./assets/plazy.jpg')},
-      { name: 'Obojživelníky', source: require('./assets/obojzivelniky.jpg')},
-      { name: 'Hmyz', source: require('./assets/hmyz.jpg')},
-      { name: 'Ryby', source: require('./assets/ryby.jpg')},
-      { name: 'Vtáky', source: require('./assets/vtaky.jpg')},
-    ]);
-    console.log(global.species);
+
+    var trash = getSpecies();
+    var res = []
+    if (trash!=undefined){
+      res = trash
+    }
+    var reslength = res.length;
+    var cpavok = []
+    for (var i = 0; i < reslength; i++) {
+      cpavok.push(res[i][0]);
+    }
+    console.log(cpavok[0]);
+    
+
+    const [items] = React.useState([]);
+    for (var i = 0; i < reslength; i++) {
+      items.push({name: cpavok[i], source: require('./assets/'+cpavok[i]+'.jpg')})
+    }
+    //console.log(global.species);
     return (
         <View style = {styles.container}>
             <LinearGradient
@@ -83,7 +75,7 @@ function SpeciesScreen(props) {
                     spacing={20}
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
-                        <TouchableOpacity onPress={() => {global.spieces = item.name; changeUrl(); props.navigation.navigate('Species')}}>
+                        <TouchableOpacity onPress={() => {global.kind=item.name}}>
                             <Image source={item.source} style={{flex: 1, width: '90%', height: 100, resizeMode: 'contain'}} /> 
                             <Text style={styles.itemName}>{item.name}</Text>
                         </TouchableOpacity>

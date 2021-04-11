@@ -34,7 +34,6 @@ class RegScreen extends Component {
   }
   
   render(){
-    const { password } = this.state;
     return(
       <Formik
         initialValues={{ emai: '', nick:'', password: '' , password2: '', birth: ''}}
@@ -134,6 +133,7 @@ class RegScreen extends Component {
     );      
   }
   login(values){
+    //const [state, dispatch] = useReducer(reducer, initialArg, init);
     if (values['password'] != values['password2']){
       this.updateerror();
       return 0;
@@ -163,14 +163,10 @@ class RegScreen extends Component {
             this.props.navigation.navigate('MainScreen');
         })
         .catch(error => {
-          console.log(error);
-          //console.error(error);
-          //console.log(error.fieldMessages);
-          //error.text().then( errorMes => {
-            //this.props.dispatch(console.log(errorMes))
-          //})
-            //daco = error.json();
-            //email = daco['errors']
+          //console.log(error);
+          error.text().then( errorMes => {
+            console.log(errorMes)
+          })
             if(error['status'] == 403){
               this.updateerrormailduplicate();
             }

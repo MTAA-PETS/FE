@@ -13,12 +13,12 @@ global.spieces = "";
 function MainScreen(props) {
   
     const [items] = React.useState([
-      { name: 'Cicavce', source: require('./assets/cicavce.jpg')},
-      { name: 'Plazy', source: require('./assets/plazy.jpg')},
-      { name: 'Obojživelníky', source: require('./assets/obojzivelniky.jpg')},
-      { name: 'Hmyz', source: require('./assets/hmyz.jpg')},
-      { name: 'Ryby', source: require('./assets/ryby.jpg')},
-      { name: 'Vtáky', source: require('./assets/vtaky.jpg')},
+      { name: 'Cicavec', source: require('./assets/Cicavec.jpg')},
+      { name: 'Plaz', source: require('./assets/Plaz.jpg')},
+      { name: 'Obojživelník', source: require('./assets/Obojživelník.jpg')},
+      { name: 'Hmyz', source: require('./assets/Hmyz.jpg')},
+      { name: 'Ryba', source: require('./assets/Ryba.jpg')},
+      { name: 'Vták', source: require('./assets/Vták.jpg')},
     ]);
   
     return (
