@@ -44,8 +44,8 @@ function SpeciesScreen(props) {
     }
     var reslength = res.length;
     var cpavok = []
-    for (var i = 0; i < reslength; i++) {
-      cpavok.push(res[i][0]);
+    for (var j = 0; j < reslength; j++) {
+      cpavok.push(res[j][0]);
     }
 
     const [items] = React.useState([]);
@@ -145,11 +145,6 @@ function SpeciesScreen(props) {
       fontSize: 16,
       color: 'black',
       fontWeight: '600',
-    },
-    itemCode: {
-      fontWeight: '600',
-      fontSize: 12,
-      color: '#fff',
     },
   });
 

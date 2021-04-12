@@ -101,7 +101,7 @@ class LogScreen extends React.Component{
             return result.json();
         })
         .then(result => {
-            idcko = result['id'];
+            global.idcko = result['id'];
             console.log(result);
             this.props.navigation.navigate('MainScreen');
         })
