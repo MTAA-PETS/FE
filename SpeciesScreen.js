@@ -14,7 +14,6 @@ global.kind=""
 function getSpecies(){
     const [data, setData] = useState([])
     url = 'https://mtaa-pets.herokuapp.com/pets/?species='+global.species;
-    console.log(url)
     const options = {
         method: 'GET',
         headers: {
@@ -47,8 +46,6 @@ function SpeciesScreen(props) {
     for (var i = 0; i < reslength; i++) {
       cpavok.push(res[i][0]);
     }
-    console.log(cpavok[0]);
-    
 
     const [items] = React.useState([]);
     for (var i = 0; i < reslength; i++) {
@@ -65,7 +62,7 @@ function SpeciesScreen(props) {
             </View>
             <View style={styles.box, styles.box_second}>
 
-                <Text style={styles.title}>Druhy zvierat</Text>
+                <Text style={styles.title}>{global.species}</Text>
                 <Text style={styles.undertitle}>Vyberte si svojho miláčika!</Text>
 
                 <FlatGrid
@@ -75,7 +72,7 @@ function SpeciesScreen(props) {
                     spacing={20}
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
-                        <TouchableOpacity onPress={() => {global.kind=item.name}}>
+                        <TouchableOpacity onPress={() => {global.kind=item.name; props.navigation.navigate('Kind')}}>
                             <Image source={item.source} style={{flex: 1, width: '90%', height: 100, resizeMode: 'contain'}} /> 
                             <Text style={styles.itemName}>{item.name}</Text>
                         </TouchableOpacity>

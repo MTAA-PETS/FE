@@ -8,6 +8,7 @@ import RegScreen from './RegScreen';
 import LogScreen from './LogScreen';
 import MainScreen from './MainScreen';
 import SpeciesScreen from './SpeciesScreen';
+import KindScreen from './KindScreen';
 
 const Stack = createStackNavigator()
 
@@ -35,6 +36,10 @@ class App extends React.Component{
           <Stack.Screen 
             name = "Species"
             component = { SpeciesScreen }
+          />
+           <Stack.Screen 
+            name = "Kind"
+            component = { KindScreen }
           />
         </Stack.Navigator>
       </NavigationContainer>
