@@ -19,7 +19,7 @@ class App extends React.Component{
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen 
             name = "Homepage"
-            component = { MainScreen }
+            component = { HomeScreen }
           />
           <Stack.Screen 
             name = "Registration"

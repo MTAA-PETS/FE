@@ -2,6 +2,7 @@ import React ,{ useState, useEffect }  from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
+import PetsSrcs from './PetsSrcs.js';
 
 var { height } = Dimensions.get('window');
 
@@ -49,9 +50,10 @@ function SpeciesScreen(props) {
 
     const [items] = React.useState([]);
     for (var i = 0; i < reslength; i++) {
-      items.push({name: cpavok[i], source: require('./assets/'+cpavok[i]+'.jpg')})
+      var src = PetsSrcs.filter(x => x.name === cpavok[i]).map((daco) => (daco.src))
+      items.push({name: cpavok[i], source: src[0]});
     }
-    //console.log(global.species);
+
     return (
         <View style = {styles.container}>
             <LinearGradient
