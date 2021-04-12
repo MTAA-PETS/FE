@@ -19,18 +19,38 @@ class RegScreen extends Component {
     this.state={errormessage2: ""}
     this.state={errormessage3: ""}
     this.state={errormessage4: ""}
+    this.state={errormessage5: ""}
+    this.state={errormessage6: ""}
+    this.state={errormessage7: ""}
+    this.state={errormessage8: ""}
+    this.state={errormessage9: ""}
   }
   updateerror(){
     this.setState({errormessage: "Heslá sa nezhodujú"})
   }
   updateerrormail(){
     this.setState({errormessage2: "Nesprávny tvar emailu"})
-  }
+  } 
   updateerrormailduplicate(){
     this.setState({errormessage3: "Tento email alebo nick už existuje"})
   }
   updateerrordate(){
-    this.setState({errormessage4: "Nemáš 18 ty čpavok"})
+    this.setState({errormessage4: "Nesprávny tvar. Zadajte v tvare RRRR-MM-DD"})
+  }
+  updateerrornick(){
+    this.setState({errormessage5: "Tento užívateľ už existuje"})
+  }
+  updateerrornick2(){
+    this.setState({errormessage6: "Toto pole je povinné"})
+  }
+  updateerrordate2(){
+    this.setState({errormessage7: "Bohužial nemáš 18 rokov"})
+  }
+  updateerrorblank(){
+    this.setState({errormessage8: "Toto pole je povinné"})
+  }
+  updateerrorblankmail(){
+    this.setState({errormessage9: "Toto pole je povinné"})
   }
   
   render(){
@@ -61,8 +81,7 @@ class RegScreen extends Component {
               {touched.email && errors.email &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
               }
-              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage2}</Text>
-              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage3}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}> {this.state.errormessage9} {this.state.errormessage2} {this.state.errormessage3}</Text>
               <Input
                 leftIcon={{ type: 'ionicon', name: 'person-circle-outline', color: 'grey'}}
                 value={values.nick}
@@ -75,6 +94,7 @@ class RegScreen extends Component {
               {touched.nick && errors.nick &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.nick}</Text>
               }
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage3} {this.state.errormessage5} {this.state.errormessage8}</Text>
               <Input
                 value={values.password}
                 style={styles.inputStyle}
@@ -88,6 +108,7 @@ class RegScreen extends Component {
               {touched.password && errors.password &&
                 <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
               }
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage8}</Text>
               <Input
                 value={values.password2}
                 style={styles.inputStyle}
@@ -102,7 +123,7 @@ class RegScreen extends Component {
               {touched.password2 && errors.password2 &&
                 <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password2}</Text>
               }
-              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage}</Text>
               <Input
                 leftIcon={{ type: 'ionicon', name: 'calendar-outline', color: 'grey'}}
                 value={values.birth}
@@ -115,7 +136,7 @@ class RegScreen extends Component {
               {touched.birth && errors.birth &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.birth}</Text>
               }
-              <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage4}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage4} {this.state.errormessage7}</Text>
             </View>
             <View style={styles.box, styles.box_quartersecond}>
               <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
@@ -126,7 +147,7 @@ class RegScreen extends Component {
               </TouchableOpacity>
               <Text style={styles.undertitle}>Už máte účet? <Text style={{fontWeight:'bold'}} onPress={() => this.props.navigation.navigate('Login')}>Prihlásenie</Text></Text>
             </View>
-          </LinearGradient>  
+          </LinearGradient>
         </View>
       )}
     </Formik> 
@@ -164,10 +185,42 @@ class RegScreen extends Component {
         })
         .catch(error => {
           //console.log(error);
-          error.text().then( errorMes => {
-            console.log(errorMes)
+          error.json().then( errorMes => {
+            if(errorMes["errors"]["birth"] != undefined){
+              if("Date has wrong format. Use one of these formats instead: YYYY-MM-DD." == errorMes["errors"]["birth"]){
+                this.updateerrordate();
+              }}
+            if("Not adult" == errorMes["errors"]){
+              this.updateerrordate2();
+            }
+            if("Duplicate values" == errorMes["errors"]){
+              this.updateerrormailduplicate();
+            }
+            if(errorMes["errors"]["email"] != undefined){
+              if("This field may not be blank." == errorMes["errors"]["email"]){
+                this.updateerrorblankmail();
+              }
+              if("Enter a valid email address." == errorMes["errors"]["email"]){
+                this.updateerrormail();
+              }
+            }
+            if(errorMes["errors"]["nick"] != undefined){
+              if("This field may not be blank." == errorMes["errors"]["nick"]){
+                this.updateerrorblank();
+              }else{
+                this.updateerrornick();
+              }
+            }
+            if(errorMes["errors"]["password"] != undefined){
+              if("This field may not be blank." == errorMes["errors"]["password"]){
+                this.updateerrorblank();
+              }
+            }
           })
             if(error['status'] == 403){
+              if("This field may not be blank." == errorMes["errors"]["birth"]){
+                this.updateerrorblank();
+              }
               this.updateerrormailduplicate();
             }
             //this.updateerror();
