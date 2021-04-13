@@ -1,51 +1,39 @@
-const PetsSrcs = [
-    {
-      name: 'Fretka',
-      src: require('./assets/Fretka.jpg'),
-    },
-    {
-      name: 'Akara',
-      src: require('./assets/Akara.jpg'),
-    },
-    {
-      name: 'Bojovnica',
-      src: require('./assets/Bojovnica.jpg'),
-    },
-    {
-      name: 'Had',
-      src: require('./assets/Had.jpg'),
-    },
-    {
-      name: 'Hmyz',
-      src: require('./assets/Hmyz.jpg'),
-    },
-    {
-      name: 'Iné',
-      src: require('./assets/Iné.jpg'),
-    },
-    {
-      name: 'Jašterica',
-      src: require('./assets/Jašterica.jpg'),
-    },
-    {
-      name: 'Korela',
-      src: require('./assets/Korela.jpg'),
-    },{
-      name: 'Korytnačka',
-      src: require('./assets/Korytnačka.jpg'),
-    },
-    {
-      name: 'Krokodil',
-      src: require('./assets/Krokodil.jpg'),
-    },
-    {
-      name: 'Líška',
-      src: require('./assets/Líška.jpg'),
-    },
-    {
-        name: 'Mačka',
-        src: require('./assets/Mačka.jpg'),
-      },
+const PetsSrcs = {
+  'Cicavec': require('./assets/cicavec.jpg'),
+
+  'Obojživelník': require('./assets/obojzivelnik.jpg'),
+
+  'Plaz': require('./assets/plaz.jpg'),
+
+  'Hmyz': require('./assets/hmyz.jpg'),
+
+  'Ryba': require('./assets/ryba.jpg'),
+
+  'Vták': require('./assets/vtak.jpg'),
+
+  'Fretka': require('./assets/fretka.jpg'),
+
+  'Akara': require('./assets/akara.jpg'),
+
+  'Bojovnica': require('./assets/bojovnica.jpg'),
+
+  'Had': require('./assets/had.jpg'),
+
+  'Iné': require('./assets/ine.jpg'),
+
+  'Jašterica': require('./assets/jasterica.jpg'),
+
+  'Korela': require('./assets/korela.jpg'),
+
+  'Korytnačka': require('./assets/korytnacka.jpg'),
+
+  'Krokodil': require('./assets/krokodil.jpg'),
+
+  'Líška': require('./assets/liska.jpg'),
+
+  'Mačka': require('./assets/macka.jpg'),
+
+/*
       {
         name: 'Mlok',
         src: require('./assets/Mlok.jpg'),
@@ -107,7 +95,7 @@ const PetsSrcs = [
       {
         name: 'Živorodka',
         src: require('./assets/Živorodka.jpg'),
-      },
-  ];
+      }, */
+  };
   
   export default PetsSrcs;

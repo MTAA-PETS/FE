@@ -240,12 +240,6 @@ class RegScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#5EF9D4',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   background: {
     position: 'absolute',
     left: 0,
@@ -293,10 +287,6 @@ const styles = StyleSheet.create({
   icon: {
     color: "white",
     flex:.1 ,
-  },
-  text: {
-    color: 'white',
-    fontSize: 16
   },
   formContainer: {
     padding : 50

@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions, FlatList } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
+import PetsSrcs from './PetsSrcs';
 
 var { height } = Dimensions.get('window');
 
@@ -12,12 +13,12 @@ global.spieces = "";
 function MainScreen(props) {
   
     const [items] = React.useState([
-      { name: 'Cicavec', source: require('./assets/Cicavec.jpg')},
-      { name: 'Plaz', source: require('./assets/Plaz.jpg')},
-      { name: 'Obojživelník', source: require('./assets/Obojživelník.jpg')},
-      { name: 'Hmyz', source: require('./assets/Hmyz.jpg')},
-      { name: 'Ryba', source: require('./assets/Ryba.jpg')},
-      { name: 'Vták', source: require('./assets/Vták.jpg')},
+      { name: 'Cicavec', source: PetsSrcs['Cicavec']},
+      { name: 'Plaz', source: PetsSrcs['Plaz']},
+      { name: 'Obojživelník', source: PetsSrcs['Obojživelník']},
+      { name: 'Hmyz', source: PetsSrcs['Hmyz']},
+      { name: 'Ryba', source: PetsSrcs['Ryba']},
+      { name: 'Vták', source: PetsSrcs['Vták']},
     ]);
   
     return (
@@ -78,12 +79,6 @@ function MainScreen(props) {
         top: 0,
         height: height,
       },
-    gradient: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems:'center',
-      borderRadius: 30
-    },
     title: {
         alignItems: 'flex-start',
         fontSize: 30,
@@ -110,11 +105,6 @@ function MainScreen(props) {
       fontSize: 16,
       color: 'black',
       fontWeight: '600',
-    },
-    itemCode: {
-      fontWeight: '600',
-      fontSize: 12,
-      color: '#fff',
     },
   });
 

@@ -49,6 +49,7 @@ class LogScreen extends React.Component{
                 onChangeText={handleChange('emailnick')}
                 onBlur={() => setFieldTouched('emailnick')}
                 placeholder="E-mail alebo nick"
+                label = "E-mail alebo nick"
               />   
               {touched.email && errors.email &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
@@ -60,6 +61,7 @@ class LogScreen extends React.Component{
                 placeholder="Heslo"
                 onBlur={() => setFieldTouched('password')}
                 secureTextEntry={true}
+                label = "Heslo"
                 leftIcon={{ type: 'ionicon', name: 'key-outline', color:'grey'}}
               />
               {touched.password && errors.password &&
@@ -113,12 +115,6 @@ class LogScreen extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#5EF9D4',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   background: {
     position: 'absolute',
     left: 0,
@@ -166,10 +162,6 @@ const styles = StyleSheet.create({
   icon: {
     color: "white",
     flex:.1 ,
-  },
-  text: {
-    color: 'white',
-    fontSize: 16
   },
   formContainer: {
     padding : 50

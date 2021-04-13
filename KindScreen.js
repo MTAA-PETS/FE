@@ -50,8 +50,8 @@ function KindScreen(props) {
 
     const [items] = React.useState([]);
     for (var i = 0; i < reslength; i++) {
-      var src = PetsSrcs.filter(x => x.name === cpavok[i]).map((daco) => (daco.src))
-      items.push({name: cpavok[i], source: src[0]});
+      var src = PetsSrcs[cpavok[i]]
+      items.push({name: cpavok[i], source: src});
     }
 
     return (
@@ -113,12 +113,6 @@ function KindScreen(props) {
         top: 0,
         height: height,
       },
-    gradient: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems:'center',
-      borderRadius: 30
-    },
     title: {
         alignItems: 'flex-start',
         fontSize: 30,
@@ -145,11 +139,6 @@ function KindScreen(props) {
       fontSize: 16,
       color: 'black',
       fontWeight: '600',
-    },
-    itemCode: {
-      fontWeight: '600',
-      fontSize: 12,
-      color: '#fff',
     },
   });
 

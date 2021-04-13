@@ -50,8 +50,8 @@ function SpeciesScreen(props) {
 
     const [items] = React.useState([]);
     for (var i = 0; i < reslength; i++) {
-      var src = PetsSrcs.filter(x => x.name === cpavok[i]).map((daco) => (daco.src))
-      items.push({name: cpavok[i], source: src[0]});
+      var src = PetsSrcs[cpavok[i]]
+      items.push({name: cpavok[i], source: src});
     }
 
     return (
