@@ -2,6 +2,7 @@ import React ,{ useState, useEffect }  from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import PetsImgs from './PetsImgs.js';
 
 var { height } = Dimensions.get('window');
@@ -63,7 +64,9 @@ function KindScreen(props) {
                         
             </View>
             <View style={styles.box, styles.box_second}>
-
+                <TouchableOpacity onPress={() => {global.kind=""; props.navigation.goBack()}}>
+                  <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
+                </TouchableOpacity>
                 <Text style={styles.title}>{global.kind}</Text>
                 <Text style={styles.undertitle}>Vyberte si svojho miláčika!</Text>
 
@@ -90,22 +93,22 @@ function KindScreen(props) {
   
   const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#5EF9D4',
-      },
-      box: {
-        height: box_height,
-      },
-      box_first: {
-        flex: 0.1,
-        alignItems: 'flex-start',
-        padding: 10,
-        justifyContent:'center',
-      },
-      box_second: {
-        flex: 0.9,
-      },
+      flex: 1,
+      flexDirection: 'column',
+      backgroundColor: '#5EF9D4',
+    },
+    box: {
+      height: box_height,
+    },
+    box_first: {
+      flex: 0.05,
+      alignItems: 'flex-start',
+      padding: 10,
+      justifyContent:'center',
+    },
+    box_second: {
+      flex: 0.95,
+    },
     background: {
         position: 'absolute',
         left: 0,
@@ -113,6 +116,12 @@ function KindScreen(props) {
         top: 0,
         height: height,
       },
+    back:{
+      justifyContent: 'left',
+      alignItems: 'flex-start',
+      paddingLeft: 20,
+      paddingBottom: 10
+    },
     title: {
         alignItems: 'flex-start',
         fontSize: 30,

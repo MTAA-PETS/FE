@@ -36,7 +36,7 @@ function getSpecies(){
   }
 
 function SpeciesScreen(props) {
-    console.log("DACO");
+
     var trash = getSpecies();
     var res = []
     if (trash!=undefined){
@@ -63,7 +63,7 @@ function SpeciesScreen(props) {
                         
             </View>
             <View style={styles.box, styles.box_second}>
-                <TouchableOpacity onPress={() => {global.species=""; props.navigation.navigate('MainScreen')}}>
+                <TouchableOpacity onPress={() => {global.species=""; props.navigation.goBack()}}>
                   <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
                 </TouchableOpacity>
                 <Text style={styles.title}>{global.species}</Text>
@@ -115,10 +115,12 @@ function SpeciesScreen(props) {
         top: 0,
         height: height,
       },
-      back:{
-        justifyContent: 'left',
-        alignItems: 'flex-start',
-      },
+    back:{
+      justifyContent: 'left',
+      alignItems: 'flex-start',
+      paddingLeft: 20,
+      paddingBottom: 10
+    },
     gradient: {
       flex: 1,
       justifyContent: 'center',
