@@ -2,7 +2,7 @@ import React ,{ useState, useEffect }  from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
-import PetsSrcs from './PetsSrcs.js';
+import PetsImgs from './PetsImgs.js';
 
 var { height } = Dimensions.get('window');
 
@@ -50,7 +50,7 @@ function KindScreen(props) {
 
     const [items] = React.useState([]);
     for (var i = 0; i < reslength; i++) {
-      var src = PetsSrcs[cpavok[i]]
+      var src = PetsImgs[cpavok[i]]
       items.push({name: cpavok[i], source: src});
     }
 
@@ -75,7 +75,7 @@ function KindScreen(props) {
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
                         <TouchableOpacity onPress={() => {global.kind=item.name}}>
-                            
+                            <Image source={item.source} style={{width: 100, height: 100}}/>
                             <Text style={styles.itemName}>{item.name}</Text>
                         </TouchableOpacity>
                     </View>
@@ -130,7 +130,8 @@ function KindScreen(props) {
         color: 'grey',
       },
     itemContainer: {
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderRadius: 5,
       padding: 10,
       height: 150,

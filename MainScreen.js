@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions, FlatList } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
-import PetsSrcs from './PetsSrcs';
+import PetsSrcs from './PetsImgs';
 
 var { height } = Dimensions.get('window');
 
@@ -42,7 +42,7 @@ function MainScreen(props) {
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
                         <TouchableOpacity onPress={() => { global.species=item.name; props.navigation.navigate('Species')}}>
-                            <Image source={item.source} style={{flex: 1, width: '90%', height: 100, resizeMode: 'contain'}} /> 
+                            <Image source={item.source} style={{width: 100, height: 100}}/> 
                             <Text style={styles.itemName}>{item.name}</Text>
                         </TouchableOpacity>
                     </View>
@@ -96,7 +96,8 @@ function MainScreen(props) {
         color: 'grey',
       },
     itemContainer: {
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderRadius: 5,
       padding: 10,
       height: 150,
