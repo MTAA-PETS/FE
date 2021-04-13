@@ -10,6 +10,7 @@ import MainScreen from './MainScreen';
 import SpeciesScreen from './SpeciesScreen';
 import KindScreen from './KindScreen';
 import { MenuProvider } from 'react-native-popup-menu';
+import ProfileScreen from './ProfileScreen';
 
 const Stack = createStackNavigator()
 
@@ -22,7 +23,7 @@ class App extends React.Component{
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen 
               name = "Homepage"
-              component = { MainScreen }
+              component = { HomeScreen }
             />
             <Stack.Screen 
               name = "Registration"
@@ -43,6 +44,10 @@ class App extends React.Component{
             <Stack.Screen 
               name = "Kind"
               component = { KindScreen }
+            />
+            <Stack.Screen 
+              name = "MyProfile"
+              component = { ProfileScreen }
             />
           </Stack.Navigator>
         </NavigationContainer>

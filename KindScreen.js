@@ -71,7 +71,7 @@ function KindScreen(props) {
                     <Text>Menu</Text>
                   </MenuTrigger>
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
-                    <MenuOption onSelect={() => alert(`Moje Konto`)} text='Moje konto' />
+                    <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
                     <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
                     <MenuOption onSelect={() => alert(`Odhlásiť sa`)} text='Odhlásiť sa' />
                   </MenuOptions>
@@ -113,14 +113,14 @@ function KindScreen(props) {
       height: box_height,
     },
     box_first: {
-      flex: 0.1,
+      flex: 0.15,
       padding: 10,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center'
     },
     box_second: {
-      flex: 0.9,
+      flex: 0.85,
     },
     background: {
         position: 'absolute',
