@@ -17,17 +17,23 @@ class ProfileScreen extends Component {
   constructor(){
     super()
     this.state={nick: ""}
-    this.state={email: ""}
-    this.state={narodenie: ""}
     this.state={faktury: ""}
+    this.state={email: ""}
+    this.state={narodenie: ""}   
+  }
+
+  componentDidMount(){
+    this.getUser();
   }
   
   render(){
     return(
       <View style={styles.box, styles.container}>
+
           <LinearGradient
                 colors={['#5EF9D4', 'white']}
                 style = { styles.background }>
+
           <View style={styles.box, styles.box_first}>
             <TouchableOpacity onPress={() => {global.species=""; this.props.navigation.goBack()}}>
                 <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
@@ -44,28 +50,26 @@ class ProfileScreen extends Component {
                 </MenuOptions>
             </Menu>
           </View>
+
           <View style={styles.box, styles.box_second}>
               <View style={styles.data}>
-                <Text style={styles.title}>
-                    Moje údaje
-                </Text>
+                <Text style={styles.title}>Moje údaje</Text>
                 <Text>{this.state.email}</Text>
                 <Text>{this.state.nick}</Text>
                 <Text>{this.state.narodenie}</Text>
               </View>
               <View style={styles.invoices}>
-                <Text style={styles.title}>
-                    Faktúry
-                </Text>
+                <Text style={styles.title}>Faktúry</Text>
                 <Text>{this.state.faktury}</Text>
               </View>
           </View>
+
           </LinearGradient>
       </View>
     );      
   }
   getUser(){
-    //const [data, setData] = useState([])
+
     const url = 'https://mtaa-pets.herokuapp.com/user/'+global.idcko+'/';
     const options = {
         method: 'GET',
@@ -85,19 +89,15 @@ class ProfileScreen extends Component {
           this.setState({email: result['email']})
           this.setState({nick: result['nick']})
           this.setState({narodenie: result['birth']})
-          if(result['invoices'] != '[]'){
+          if(result['invoices'] && result['invoices'].length>0){
             this.setState({faktury: result['invoices']})
           }
+          else{
+            this.setState({faktury: 'Tu sa zobrazia Vaše faktúry po adopcii.'})
+          }
       })
-}
-    printmes(){
-        var trash = this.getUser();
-        var res = []
-        if (trash!=undefined){
-            res = trash
-        }
-        console.log(res);
-    }
+  }
+
 }
 
 const styles = StyleSheet.create({
