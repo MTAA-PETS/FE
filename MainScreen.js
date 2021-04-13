@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
 import PetsSrcs from './PetsImgs';
+import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
 
 var { height } = Dimensions.get('window');
 
@@ -27,7 +28,18 @@ function MainScreen(props) {
                 colors={['#5EF9D4', 'white']}
                 style = { styles.background }>
             <View style={styles.box, styles.box_first}>
-                        
+
+              <Menu style={styles.menu}>
+                  <MenuTrigger>
+                    <Image source={require('./assets/menu.png')} style={{width:40, height:40}}/>
+                    <Text>Menu</Text>
+                  </MenuTrigger>
+                  <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
+                    <MenuOption onSelect={() => alert(`Moje Konto`)} text='Moje konto' />
+                    <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
+                    <MenuOption onSelect={() => alert(`Odhlásiť sa`)} text='Odhlásiť sa' />
+                  </MenuOptions>
+                </Menu>           
             </View>
             <View style={styles.box, styles.box_second}>
 
@@ -65,7 +77,7 @@ function MainScreen(props) {
       },
       box_first: {
         flex: 0.1,
-        alignItems: 'flex-start',
+        alignItems: 'flex-end',
         padding: 10,
         justifyContent:'center',
       },
@@ -107,6 +119,39 @@ function MainScreen(props) {
       color: 'black',
       fontWeight: '600',
     },
+    menu:{
+      justifyContent: 'right',
+      alignItems: 'flex-end',
+      paddingRight: 30,
+      borderRadius: 10
+    },
+    menuOptions:{
+      shadowColor: 'black',
+      shadowOpacity: 0.3,
+      borderWidth: 1,
+      borderRadius: 10,
+    }
   });
+
+  const optionsStyles = {
+    optionsContainer: {
+      padding: 5,
+    },
+    optionsWrapper: {
+    },
+    optionWrapper: {
+      margin: 5,
+      borderBottomColor: 'grey',
+      borderBottomWidth: 0.5,
+    },
+    optionTouchable: {
+      activeOpacity: 70,
+    },
+    optionText: {
+      color: 'black',
+      fontSize: 20,
+    },
+  };
+  
 
 export default MainScreen;

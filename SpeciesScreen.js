@@ -4,6 +4,7 @@ import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
 import PetsImgs from './PetsImgs.js';
 import { Ionicons } from '@expo/vector-icons';
+import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
 
 var { height } = Dimensions.get('window');
 
@@ -60,12 +61,23 @@ function SpeciesScreen(props) {
                 colors={['#5EF9D4', 'white']}
                 style = { styles.background }>
             <View style={styles.box, styles.box_first}>
-                        
-            </View>
-            <View style={styles.box, styles.box_second}>
                 <TouchableOpacity onPress={() => {global.species=""; props.navigation.goBack()}}>
                   <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
-                </TouchableOpacity>
+                </TouchableOpacity>    
+                <Menu style={styles.menu}>
+                  <MenuTrigger>
+                    <Image source={require('./assets/menu.png')} style={{width:40, height:40}}/>
+                    <Text>Menu</Text>
+                  </MenuTrigger>
+                  <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
+                    <MenuOption onSelect={() => alert(`Moje Konto`)} text='Moje konto' />
+                    <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
+                    <MenuOption onSelect={() => alert(`Odhlásiť sa`)} text='Odhlásiť sa' />
+                  </MenuOptions>
+                </Menu>    
+            </View>
+            <View style={styles.box, styles.box_second}>
+                
                 <Text style={styles.title}>{global.species}</Text>
                 <Text style={styles.undertitle}>Vyberte si svojho miláčika!</Text>
 
@@ -100,13 +112,14 @@ function SpeciesScreen(props) {
         height: box_height,
       },
       box_first: {
-        flex: 0.05,
-        alignItems: 'flex-start',
+        flex: 0.1,
         padding: 10,
-        justifyContent:'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
       },
       box_second: {
-        flex: 0.95,
+        flex: 0.9,
       },
     background: {
         position: 'absolute',
@@ -118,8 +131,7 @@ function SpeciesScreen(props) {
     back:{
       justifyContent: 'left',
       alignItems: 'flex-start',
-      paddingLeft: 20,
-      paddingBottom: 10
+      paddingBottom: 10,
     },
     gradient: {
       flex: 1,
@@ -155,6 +167,40 @@ function SpeciesScreen(props) {
       color: 'black',
       fontWeight: '600',
     },
+    menu:{
+      justifyContent: 'right',
+      alignItems: 'flex-end',
+      paddingRight: 30,
+      borderRadius: 10
+    },
+    menuOptions:{
+      shadowColor: 'black',
+      shadowOpacity: 0.3,
+      borderWidth: 1,
+      borderRadius: 10,
+    }
   });
+
+  const optionsStyles = {
+    optionsContainer: {
+      padding: 5,
+    },
+    optionsWrapper: {
+    },
+    optionWrapper: {
+      margin: 5,
+      borderBottomColor: 'grey',
+      borderBottomWidth: 0.5,
+    },
+    optionTouchable: {
+      activeOpacity: 70,
+    },
+    optionText: {
+      color: 'black',
+      fontSize: 20,
+    },
+  };
+  
+ 
 
 export default SpeciesScreen;
