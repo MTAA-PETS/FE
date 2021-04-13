@@ -15,7 +15,7 @@ var start = width / 10;
 class RegScreen extends Component {
   constructor(){
     super()
-    this.state={errormessage: ""}
+    this.state={errormessage1: ""}
     this.state={errormessage2: ""}
     this.state={errormessage3: ""}
     this.state={errormessage4: ""}
@@ -25,32 +25,32 @@ class RegScreen extends Component {
     this.state={errormessage8: ""}
     this.state={errormessage9: ""}
   }
-  updateerror(){
-    this.setState({errormessage: "Heslá sa nezhodujú"})
+  errorbademail(){
+    this.setState({errormessage1: "Nesprávny tvar emailu"})
   }
-  updateerrormail(){
-    this.setState({errormessage2: "Nesprávny tvar emailu"})
-  } 
-  updateerrormailduplicate(){
-    this.setState({errormessage3: "Tento email alebo nick už existuje"})
+  erroremailduplicate(){
+    this.setState({errormessage2: "Tento email alebo nick už existuje"})
   }
-  updateerrordate(){
-    this.setState({errormessage4: "Nesprávny tvar. Zadajte v tvare RRRR-MM-DD"})
+  erroremailblank(){
+    this.setState({errormessage3: "Toto pole je povinné"})
   }
-  updateerrornick(){
-    this.setState({errormessage5: "Tento užívateľ už existuje"})
+  errornickblank(){
+    this.setState({errormessage4: "Toto pole je povinné"})
   }
-  updateerrornick2(){
+  errorpassword(){
+    this.setState({errormessage5: "Heslá sa nezhodujú"})
+  }
+  errorpassword1blank(){
     this.setState({errormessage6: "Toto pole je povinné"})
   }
-  updateerrordate2(){
-    this.setState({errormessage7: "Bohužial nemáš 18 rokov"})
+  errorpassword2blank(){
+    this.setState({errormessage7: "Toto pole je povinné"})
   }
-  updateerrorblank(){
-    this.setState({errormessage8: "Toto pole je povinné"})
+  errordate(){
+    this.setState({errormessage8: "Nesprávny tvar. Zadajte v tvare RRRR-MM-DD"})
   }
-  updateerrorblankmail(){
-    this.setState({errormessage9: "Toto pole je povinné"})
+  errorunder18(){
+    this.setState({errormessage9: "Bohužial nemáš 18 rokov"})
   }
   
   render(){
@@ -81,7 +81,7 @@ class RegScreen extends Component {
               {touched.email && errors.email &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
               }
-              <Text style={{ fontSize: 12, color: 'red' }}> {this.state.errormessage9} {this.state.errormessage2} {this.state.errormessage3}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}> {this.state.errormessage1} {this.state.errormessage2} {this.state.errormessage3}</Text>
               <Input
                 leftIcon={{ type: 'ionicon', name: 'person-circle-outline', color: 'grey'}}
                 value={values.nick}
@@ -94,7 +94,7 @@ class RegScreen extends Component {
               {touched.nick && errors.nick &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.nick}</Text>
               }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage3} {this.state.errormessage5} {this.state.errormessage8}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage2} {this.state.errormessage4} </Text>
               <Input
                 value={values.password}
                 style={styles.inputStyle}
@@ -108,7 +108,7 @@ class RegScreen extends Component {
               {touched.password && errors.password &&
                 <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
               }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage8}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage5} {this.state.errormessage6}</Text>
               <Input
                 value={values.password2}
                 style={styles.inputStyle}
@@ -123,7 +123,7 @@ class RegScreen extends Component {
               {touched.password2 && errors.password2 &&
                 <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password2}</Text>
               }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage7}</Text>
               <Input
                 leftIcon={{ type: 'ionicon', name: 'calendar-outline', color: 'grey'}}
                 value={values.birth}
@@ -136,7 +136,7 @@ class RegScreen extends Component {
               {touched.birth && errors.birth &&
                   <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.birth}</Text>
               }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage4} {this.state.errormessage7}</Text>
+              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage8} {this.state.errormessage9}</Text>
             </View>
             <View style={styles.box, styles.box_quartersecond}>
               <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
@@ -155,10 +155,6 @@ class RegScreen extends Component {
   }
   login(values){
     //const [state, dispatch] = useReducer(reducer, initialArg, init);
-    if (values['password'] != values['password2']){
-      this.updateerror();
-      return 0;
-    }
     const url = 'https://mtaa-pets.herokuapp.com/user/signup/';
     const options = {
       method: 'POST',
@@ -186,43 +182,58 @@ class RegScreen extends Component {
         .catch(error => {
           //console.log(error);
           error.json().then( errorMes => {
+            console.log(errorMes);
+            this.setState({errormessage1: ""});
+            this.setState({errormessage2: ""});
+            this.setState({errormessage3: ""});
+            this.setState({errormessage4: ""});
+            this.setState({errormessage5: ""});
+            this.setState({errormessage6: ""});
+            this.setState({errormessage7: ""});
+            this.setState({errormessage8: ""});
+            this.setState({errormessage9: ""});
+            if (values['password'] != values['password2']){
+              this.errorpassword();
+            }
             if(errorMes["errors"]["birth"] != undefined){
               if("Date has wrong format. Use one of these formats instead: YYYY-MM-DD." == errorMes["errors"]["birth"]){
-                this.updateerrordate();
+                this.errordate();
               }}
             if("Not adult" == errorMes["errors"]){
-              this.updateerrordate2();
+              this.errorunder18();
             }
             if("Duplicate values" == errorMes["errors"]){
-              this.updateerrormailduplicate();
+              this.erroremailduplicate();
             }
-            if(errorMes["errors"]["email"] != undefined){
-              if("This field may not be blank." == errorMes["errors"]["email"]){
-                this.updateerrorblankmail();
-              }
-              if("Enter a valid email address." == errorMes["errors"]["email"]){
-                this.updateerrormail();
-              }
+            if("This field is required." == errorMes["errors"]["email"] || "This field may not be blank." == errorMes["errors"]["email"]){
+              this.erroremailblank();
+            }
+            if("Enter a valid email address." == errorMes["errors"]["email"]){
+              this.errorbademail();
             }
             if(errorMes["errors"]["nick"] != undefined){
               if("This field may not be blank." == errorMes["errors"]["nick"]){
-                this.updateerrorblank();
+                this.errornickblank();
               }else{
-                this.updateerrornick();
+                this.erroremailduplicate();
               }
             }
             if(errorMes["errors"]["password"] != undefined){
               if("This field may not be blank." == errorMes["errors"]["password"]){
-                this.updateerrorblank();
+                this.errorpassword1blank();
               }
+            if("" == values["password2"]){
+              this.errorpassword2blank();
+            }
+              this.error
             }
           })
-            if(error['status'] == 403){
-              if("This field may not be blank." == errorMes["errors"]["birth"]){
-                this.updateerrorblank();
-              }
-              this.updateerrormailduplicate();
-            }
+            //if(error['status'] == 403){
+              //if("This field may not be blank." == errorMes["errors"]["birth"]){
+                //this.updateerrorblank();
+              //}
+              //this.updateerrormailduplicate();
+            //}
             //this.updateerror();
         })
     }
