@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'rea
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
 import PetsImgs from './PetsImgs.js';
+import { Ionicons } from '@expo/vector-icons';
 
 var { height } = Dimensions.get('window');
 
@@ -34,9 +35,8 @@ function getSpecies(){
     }
   }
 
-
 function SpeciesScreen(props) {
-
+    console.log("DACO");
     var trash = getSpecies();
     var res = []
     if (trash!=undefined){
@@ -63,7 +63,9 @@ function SpeciesScreen(props) {
                         
             </View>
             <View style={styles.box, styles.box_second}>
-
+                <TouchableOpacity onPress={() => {global.species=""; props.navigation.navigate('MainScreen')}}>
+                  <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
+                </TouchableOpacity>
                 <Text style={styles.title}>{global.species}</Text>
                 <Text style={styles.undertitle}>Vyberte si svojho miláčika!</Text>
 
@@ -98,13 +100,13 @@ function SpeciesScreen(props) {
         height: box_height,
       },
       box_first: {
-        flex: 0.1,
+        flex: 0.05,
         alignItems: 'flex-start',
         padding: 10,
         justifyContent:'center',
       },
       box_second: {
-        flex: 0.9,
+        flex: 0.95,
       },
     background: {
         position: 'absolute',
@@ -112,6 +114,10 @@ function SpeciesScreen(props) {
         right: 0,
         top: 0,
         height: height,
+      },
+      back:{
+        justifyContent: 'left',
+        alignItems: 'flex-start',
       },
     gradient: {
       flex: 1,

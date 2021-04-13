@@ -20,7 +20,7 @@ function MainScreen(props) {
       { name: 'Ryba', source: PetsSrcs['Ryba']},
       { name: 'Vták', source: PetsSrcs['Vták']},
     ]);
-  
+    global.spieces = "";
     return (
         <View style = {styles.container}>
             <LinearGradient
@@ -41,7 +41,7 @@ function MainScreen(props) {
                     spacing={20}
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
-                        <TouchableOpacity onPress={() => { global.species=item.name; props.navigation.navigate('Species')}}>
+                        <TouchableOpacity onPress={() => { global.species=item.name; props.navigation.navigate('Species');}}>
                             <Image source={item.source} style={{width: 100, height: 100}}/> 
                             <Text style={styles.itemName}>{item.name}</Text>
                         </TouchableOpacity>
