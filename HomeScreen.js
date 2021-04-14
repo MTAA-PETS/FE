@@ -86,12 +86,13 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems:'center',
-      borderRadius: 30
+      borderRadius: 20
     },
     button: {
       width: '50%',
       height: 45,
       margin: 5,
+      
     },
     buttonText: {
       alignItems: 'center',

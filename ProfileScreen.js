@@ -3,6 +3,7 @@ import { Image, TextInput, Alert, StyleSheet, Text, Button, View, TouchableOpaci
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
+import Moment from 'moment';
 
 var { height } = Dimensions.get('window');
 var { width } = Dimensions.get('window');
@@ -56,9 +57,9 @@ class ProfileScreen extends Component {
                 <TouchableOpacity onPress={() => alert('Tu sa bude dať vložiť')} style={{backgroundColor: 'grey', width: 50, height: 50, margin: 20}}>
                   <Text>Profilovka</Text>
                 </TouchableOpacity>
-                <Text style={styles.textik}> <b>Email: </b> {this.state.email}</Text>
-                <Text style={styles.textik}> <b>Nick: </b> {this.state.nick}</Text>
-                <Text style={styles.textik}> <b>Narodenie: </b>{this.state.narodenie}</Text>
+                <Text style={styles.textik}>{this.state.email}</Text>
+                <Text style={styles.textik}>{this.state.nick}</Text>
+                <Text style={styles.textik}>{this.state.narodenie}</Text>
               </View>
               <View style={styles.invoices}>
                 <Text style={styles.title}>Faktúry</Text>
@@ -88,14 +89,23 @@ class ProfileScreen extends Component {
       })
       .then(result => {
           console.log(result);
-          this.setState({email: result['email']})
-          this.setState({nick: result['nick']})
-          this.setState({narodenie: result['birth']})
+          this.setState({email: "Email: " + result['email']});
+          this.setState({nick: "Nick: " + result['nick']});
+          this.setState({narodenie: "Narodenie: " + Moment(result['birth']).format("DD.MM.YYYY")});
+          var all="";
           if(result['invoices'] && result['invoices'].length>0){
-            this.setState({faktury: result['invoices']})
+            for (var i=0; i<result['invoices'].length; i++){
+              var invoices = result['invoices'][i];
+              all += "Číslo faktúry: " + invoices['id'] + "\n";
+              Moment.locale('sk');
+              all += "Dátum: " + Moment(invoices['date']).format('LLL')+ "\n";
+              all += "Meno zvieratka: " + invoices['name']+ "\n";
+              all += "Suma: " + invoices['amount']+ "€\n\n";
+            } 
+            this.setState({faktury: all});
           }
           else{
-            this.setState({faktury: 'Tu sa zobrazia Vaše faktúry o adopcii.'})
+            this.setState({faktury: 'Zatiaľ nemáte žiadne faktúry o adopcii.'})
           }
       })
   }
