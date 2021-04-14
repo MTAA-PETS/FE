@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import PetsImgs from './PetsImgs.js';
 import { Ionicons } from '@expo/vector-icons';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
+import {LogOut} from './MainScreen';
 
 var { height } = Dimensions.get('window');
 
@@ -72,7 +73,7 @@ function SpeciesScreen(props) {
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
                     <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
-                    <MenuOption onSelect={() => alert(`Odhlásiť sa`)} text='Odhlásiť sa' />
+                    <MenuOption onSelect={() => LogOut(props) } text='Odhlásiť sa' />
                   </MenuOptions>
                 </Menu>    
             </View>

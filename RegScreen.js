@@ -50,7 +50,7 @@ class RegScreen extends Component {
     this.setState({errormessage8: "Nesprávny tvar. Zadajte v tvare RRRR-MM-DD"})
   }
   errorunder18(){
-    this.setState({errormessage9: "Bohužial nemáš 18 rokov"})
+    this.setState({errormessage9: "Je potrebné mať aspoň 18 rokov"})
   }
   
   render(){
@@ -59,7 +59,7 @@ class RegScreen extends Component {
         initialValues={{ emai: '', nick:'', password: '' , password2: '', birth: ''}}
         onSubmit={values => this.login(values)}
       >
-      {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
+      {({ values, handleChange, setFieldTouched, handleSubmit }) => (
         <View style={styles.formContainer}>
           <LinearGradient
                       colors={['#5EF9D4', 'white']}
@@ -78,10 +78,7 @@ class RegScreen extends Component {
                 placeholder="lill@ly.com"
                 label="E-mail"
               />   
-              {touched.email && errors.email &&
-                  <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
-              }
-              <Text style={{ fontSize: 12, color: 'red' }}> {this.state.errormessage1} {this.state.errormessage2} {this.state.errormessage3}</Text>
+              <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end'}}> {this.state.errormessage1} {this.state.errormessage2} {this.state.errormessage3}</Text>
               <Input
                 leftIcon={{ type: 'ionicon', name: 'person-circle-outline', color: 'grey'}}
                 value={values.nick}
@@ -91,10 +88,7 @@ class RegScreen extends Component {
                 placeholder="lilly9"
                 label="Nick"
               />   
-              {touched.nick && errors.nick &&
-                  <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.nick}</Text>
-              }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage2} {this.state.errormessage4} </Text>
+              <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errormessage2} {this.state.errormessage4} </Text>
               <Input
                 value={values.password}
                 style={styles.inputStyle}
@@ -105,10 +99,7 @@ class RegScreen extends Component {
                 secureTextEntry={true}
                 leftIcon={{ type: 'ionicon', name: 'lock-closed-outline', color:'grey'}}
               />
-              {touched.password && errors.password &&
-                <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
-              }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage5} {this.state.errormessage6}</Text>
+              <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errormessage5} {this.state.errormessage6}</Text>
               <Input
                 value={values.password2}
                 style={styles.inputStyle}
@@ -120,26 +111,20 @@ class RegScreen extends Component {
                 RightIcon={{ type: 'ionicon', name: 'lock-closed-outline', color:'grey'}}
                 label="Overenie hesla"
               />
-              {touched.password2 && errors.password2 &&
-                <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password2}</Text>
-              }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage7}</Text>
+              <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errormessage7}</Text>
               <Input
                 leftIcon={{ type: 'ionicon', name: 'calendar-outline', color: 'grey'}}
                 value={values.birth}
                 style={styles.inputStyle}
                 onChangeText={handleChange('birth')}
                 onBlur={() => setFieldTouched('birth')}
-                placeholder="1998-08-08"
+                placeholder="1998-12-25"
                 label="Dátum narodenia"
               />   
-              {touched.birth && errors.birth &&
-                  <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.birth}</Text>
-              }
-              <Text style={{ fontSize: 12, color: 'red' }}>{this.state.errormessage8} {this.state.errormessage9}</Text>
+              <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errormessage8} {this.state.errormessage9}</Text>
             </View>
             <View style={styles.box, styles.box_quartersecond}>
-              <TouchableOpacity disabled={!isValid} style={styles.button} onPress={handleSubmit}>
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                     <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
                         <Text style={styles.btntext}>REGISTRÁCIA</Text>
                         <Ionicons style = {styles.icon} name="log-in-outline" size={20} color="white" resizeMode="contain" />
@@ -228,13 +213,6 @@ class RegScreen extends Component {
               this.error
             }
           })
-            //if(error['status'] == 403){
-              //if("This field may not be blank." == errorMes["errors"]["birth"]){
-                //this.updateerrorblank();
-              //}
-              //this.updateerrormailduplicate();
-            //}
-            //this.updateerror();
         })
     }
 }
@@ -257,13 +235,13 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   box_quartersecond: {
-    flex: 0.15,
+    flex: 0.05,
     alignItems: 'center',
     padding: start,
     justifyContent:'center',
   },
   box_half: {
-    flex: 0.7,
+    flex: 0.85,
     alignItems: 'center',
     justifyContent:'center',
     padding: start,

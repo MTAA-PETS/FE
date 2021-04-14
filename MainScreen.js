@@ -11,6 +11,11 @@ var box_count = 2;
 var box_height = height / box_count;
 global.spieces = "";
 
+export function LogOut(props){
+  global.idcko = 0;
+  props.navigation.navigate('Homepage');
+}
+
 function MainScreen(props) {
   
     const [items] = React.useState([
@@ -37,7 +42,7 @@ function MainScreen(props) {
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
                     <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
-                    <MenuOption onSelect={() => alert(`Odhlásiť sa`)} text='Odhlásiť sa' />
+                    <MenuOption onSelect={() => LogOut(props) } text='Odhlásiť sa' />
                   </MenuOptions>
                 </Menu>           
             </View>

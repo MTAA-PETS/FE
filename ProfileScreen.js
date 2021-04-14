@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
 import Moment from 'moment';
+import {LogOut} from './MainScreen';
 
 var { height } = Dimensions.get('window');
 var { width } = Dimensions.get('window');
@@ -46,7 +47,7 @@ class ProfileScreen extends Component {
                 <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption disabled={true} text='Moje konto' />
                     <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
-                    <MenuOption onSelect={() => alert(`Odhlásiť sa`)} text='Odhlásiť sa' />
+                    <MenuOption onSelect={() => LogOut(this.props) } text='Odhlásiť sa' />
                 </MenuOptions>
             </Menu>
           </View>
@@ -97,8 +98,7 @@ class ProfileScreen extends Component {
             for (var i=0; i<result['invoices'].length; i++){
               var invoices = result['invoices'][i];
               all += "Číslo faktúry: " + invoices['id'] + "\n";
-              Moment.locale('sk');
-              all += "Dátum: " + Moment(invoices['date']).format('LLL')+ "\n";
+              all += "Dátum: " + Moment(invoices['date']).format('DD.MM.YY, HH:mm') + "\n";
               all += "Meno zvieratka: " + invoices['name']+ "\n";
               all += "Suma: " + invoices['amount']+ "€\n\n";
             } 

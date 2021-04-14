@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import PetsImgs from './PetsImgs.js';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
+import {LogOut} from './MainScreen';
 
 var { height } = Dimensions.get('window');
 
@@ -12,7 +13,7 @@ var box_count = 2;
 var box_height = height / box_count;
 var url = ""
 
-global.kind=""
+global.pet=""
 
 function getKinds(){
     const [data, setData] = useState([])
@@ -53,7 +54,12 @@ function KindScreen(props) {
     const [items] = React.useState([]);
     for (var i = 0; i < reslength; i++) {
       var src = PetsImgs[cpavok[i]]
-      items.push({name: cpavok[i], source: src});
+      var namik = cpavok[i]
+      if(namik.length > 16){
+        namik = namik.slice(0,13);
+        namik += "..."
+      }
+      items.push({name: cpavok[i], name2: namik, source: src});
     }
 
     return (
@@ -73,7 +79,7 @@ function KindScreen(props) {
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
                     <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
-                    <MenuOption onSelect={() => alert(`Odhlásiť sa`)} text='Odhlásiť sa' />
+                    <MenuOption onSelect={() => LogOut(props) } text='Odhlásiť sa' />
                   </MenuOptions>
                 </Menu>      
             </View>
@@ -89,9 +95,9 @@ function KindScreen(props) {
                     spacing={20}
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
-                        <TouchableOpacity onPress={() => {global.kind=item.name}}>
+                        <TouchableOpacity onPress={() => {global.pet=item.name; props.navigation.navigate('Pet')}}>
                             <Image source={item.source} style={{width: 100, height: 100}}/>
-                            <Text style={styles.itemName}>{item.name}</Text>
+                            <Text style={styles.itemName}>{item.name2}</Text>
                         </TouchableOpacity>
                     </View>
                     )}

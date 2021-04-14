@@ -11,6 +11,7 @@ import SpeciesScreen from './SpeciesScreen';
 import KindScreen from './KindScreen';
 import { MenuProvider } from 'react-native-popup-menu';
 import ProfileScreen from './ProfileScreen';
+import PetScreen from './PetScreen';
 
 const Stack = createStackNavigator()
 
@@ -48,6 +49,10 @@ class App extends React.Component{
             <Stack.Screen 
               name = "MyProfile"
               component = { ProfileScreen }
+            />
+            <Stack.Screen 
+              name = "Pet"
+              component = { PetScreen }
             />
           </Stack.Navigator>
         </NavigationContainer>
