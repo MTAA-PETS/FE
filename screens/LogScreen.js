@@ -32,7 +32,7 @@ class LogScreen extends React.Component{
       }}
       onSubmit={values => this.login(values)}
      >
-      {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
+      {({ values, handleChange, setFieldTouched, isValid, handleSubmit }) => (
         <View style={styles.formContainer}>
           <LinearGradient
                       colors={['#5EF9D4', 'white']}
@@ -51,9 +51,6 @@ class LogScreen extends React.Component{
                 placeholder="E-mail alebo nick"
                 label = "E-mail alebo nick"
               />   
-              {touched.email && errors.email &&
-                  <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.email}</Text>
-              }
               <Input
                 value={values.password}
                 style={styles.inputStyle}
@@ -64,9 +61,6 @@ class LogScreen extends React.Component{
                 label = "Heslo"
                 leftIcon={{ type: 'ionicon', name: 'key-outline', color:'grey'}}
               />
-              {touched.password && errors.password &&
-                <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.password}</Text>
-              }
               <Text style={{ fontSize: 17, color: 'red' }}>{this.state.errormessage}</Text>
             </View>
             <View style={styles.box, styles.box_quartersecond}>

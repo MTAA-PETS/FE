@@ -20,11 +20,11 @@ class HomeScreen extends React.Component {
               style = { styles.background }>
 
             <View style={styles.box, styles.box_quarterfirst} >
-              <Text style={styles.title}>Pets</Text>
+              <Image source={require('../assets/appName.png')} style={{flex: 1, width: '80%', height: 100, resizeMode: 'contain'}} /> 
             </View>
 
             <View style={styles.box, styles.box_half}>
-              <Image source={require('../assets/logo.png')} alt={"logo"} style={{flex: 1, width: '90%', height: 100, resizeMode: 'contain'}} /> 
+              <Image source={require('../assets/logo.png')} style={{flex: 1, width: '90%', height: 100, resizeMode: 'contain'}} /> 
             </View>
 
             <View style={styles.box, styles.box_quartersecond}>

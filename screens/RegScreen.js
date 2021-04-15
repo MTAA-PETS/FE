@@ -57,7 +57,7 @@ class RegScreen extends Component {
     return(
       <Formik
         initialValues={{ emai: '', nick:'', password: '' , password2: '', birth: ''}}
-        onSubmit={values => this.login(values)}
+        onSubmit={values => this.signUp(values)}
       >
       {({ values, handleChange, setFieldTouched, handleSubmit }) => (
         <View style={styles.formContainer}>
@@ -138,8 +138,7 @@ class RegScreen extends Component {
     </Formik> 
     );      
   }
-  login(values){
-    //const [state, dispatch] = useReducer(reducer, initialArg, init);
+  signUp(values){
     const url = 'https://mtaa-pets.herokuapp.com/user/signup/';
     const options = {
       method: 'POST',

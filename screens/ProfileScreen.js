@@ -46,7 +46,7 @@ class ProfileScreen extends Component {
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption disabled={true} text='Moje konto' />
-                    <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
+                    <MenuOption onSelect={() => this.props.navigation.navigate('Filter')} text='Vyhľadať' />
                     <MenuOption onSelect={() => LogOut(this.props) } text='Odhlásiť sa' />
                 </MenuOptions>
             </Menu>

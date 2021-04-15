@@ -13,8 +13,6 @@ var box_count = 2;
 var box_height = height / box_count;
 var url = ""
 
-global.pet=""
-
 function getPets(){
     const [data, setData] = useState([])
     url = 'https://mtaa-pets.herokuapp.com/pets/search/?species=' + global.search[0] + '&age__lte=' + global.search[1] + '&price__lte=' + global.search[2];
@@ -87,7 +85,7 @@ export default function FilteredScreen(props){
                   </MenuTrigger>
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
-                    <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
+                    <MenuOption onSelect={() => props.navigation.navigate('Filter')} text='Vyhľadať' />
                     <MenuOption onSelect={() => LogOut(props) } text='Odhlásiť sa' />
                   </MenuOptions>
                 </Menu>      

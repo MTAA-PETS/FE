@@ -6,12 +6,14 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { Ionicons } from '@expo/vector-icons';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
 import {LogOut} from './MainScreen';
+import { SliderBox } from "react-native-image-slider-box";
 
 var { height } = Dimensions.get('window');
 var { width } = Dimensions.get('window');
 
 var box_count = 3;
 var box_height = height / box_count;
+var start = width / 6;
 
 global.search=[]
 
@@ -63,17 +65,47 @@ class FilterScreen extends React.Component {
                     <Text>Menu</Text>
                   </MenuTrigger>
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
-                    <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
-                    <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
-                    <MenuOption onSelect={() => LogOut(props) } text='Odhlásiť sa' />
+                    <MenuOption onSelect={() => this.props.navigation.navigate('MyProfile')} text='Moje konto' />
+                    <MenuOption onSelect={() => this.props.navigation.navigate('Filter')} text='Vyhľadať' />
+                    <MenuOption onSelect={() => LogOut(this.props) } text='Odhlásiť sa' />
                   </MenuOptions>
                 </Menu>      
             </View>
+
+            <View style={styles.box, styles.anotherbox}>
+                <SliderBox
+                    images={[require('../assets/collage.jpg')]}
+                    sliderBoxHeight={280}
+                    sliderBoxWidth={start}
+                    sliderBox
+                    dotColor="#92FCE9"
+                    inactiveDotColor="#90A4AE"
+                    paginationBoxVerticalPadding={20}
+                    resizeMethod={'scale'}
+                    paginationBoxStyle={{
+                        position: "absolute",
+                        bottom: 0,
+                        padding: 0,
+                        alignItems: "center",
+                        alignSelf: "center",
+                        justifyContent: "center",
+                        paddingVertical: 10
+                    }}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5,
+                        backgroundColor: "rgba(128, 128, 128, 0.92)"
+                    }}
+                    ImageComponentStyle={{borderRadius: 15, width: '90%', marginTop: 5}}
+                    imageLoadingColor="#2196F3"
+                />
+              </View>
                         
             <View style={styles.box, styles.box_half}>
 
                 <View style={{zIndex: 10, flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
-                    <Text style={styles.textik}>Druh:       </Text>
+                    <Text style={styles.textik}> Druh:       </Text>
                     <DropDownPicker
                         items={[
                             {label: 'Cicavec', value: 'Cicavec'},
@@ -113,7 +145,7 @@ class FilterScreen extends React.Component {
                 </View>
 
                 <View style={styles.nextto}>
-                    <Text style={styles.textik} textAlign={'center'}>Max. cena: </Text>
+                    <Text style={styles.textik} textAlign={'center'}> Max. cena: </Text>
                     <TextInput
                         style={styles.input}
                         onChangeText={this.handlePrice}

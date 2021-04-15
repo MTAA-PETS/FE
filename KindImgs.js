@@ -75,7 +75,7 @@ const KindImgs = {
  
  'Čivava':[ 
      require('./assets/pets/civava.jpg'),
-     require('./assets/pets/civava.jpg')
+     require('./assets/pets/civava1.jpg')
  ],
  
  'Doberman':[ 

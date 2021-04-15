@@ -16,19 +16,16 @@ var box_count = 3;
 var box_height = height / box_count;
 var start = width / 6;
 
-global.from = '';
-
-export default class FondScreen extends Component {
+export default class AdoptScreen extends Component {
   constructor(){
     super()
     this.state={
         images: [],
-        errorfond: '',
+        errorName: '',
+        errorStreet: '',
+        errorCity: '',
+        errorZip: ''
     }
-  }
-
-  errorfond(){
-    this.setState({errorfond: 'Minimálna čiastka je 5€'})
   }
 
   componentDidMount(){
@@ -37,16 +34,45 @@ export default class FondScreen extends Component {
     this.setState({images: imgs})
   }
 
-  checkFond(values){
-    if(values['fond']<5.0){
-      this.errorfond();
+  checkAdoption(values){
+    var what = 0;
+    if(values['namesurname']==''){
+        this.setState({errorName: 'Toto pole je povinné'});
     }
     else{
-      this.setState({errorfond: ''});
-      global.from = 'fond';
+        this.setState({errorName: ''});
+        what += 1;
+    }
+    if(values['street']==''){
+        this.setState({errorStreet: 'Toto pole je povinné'});
+    }
+    else{
+        this.setState({errorStreet: ''});
+        what += 1;
+    }
+    if(values['zip']==''){
+        this.setState({errorZip: 'Toto pole je povinné'});
+    }
+    else if(values['zip'].length<5 || isNaN(values['zip'])){
+        this.setState({errorZip: 'Zlý formát. Je potrebných 5 číslic.'})
+    }
+    else{
+        this.setState({errorZip: ''})
+        what += 1;
+    }
+    if(values['city']==''){
+        this.setState({errorCity: 'Toto pole je povinné'});
+    }
+    else{
+        this.setState({errorCity: ''});
+        what += 1;
+    }
+    global.from = 'adopt';
+    if(what==4){
       this.props.navigation.navigate('Summary');
     }
-  }
+
+}
   
   render(){
     return(
@@ -60,7 +86,7 @@ export default class FondScreen extends Component {
             <TouchableOpacity onPress={() => {global.species=""; this.props.navigation.goBack()}}>
                 <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
             </TouchableOpacity>
-            <Text style={styles.title}>Podpora</Text>
+            <Text style={styles.title}>Adopcia</Text>
             <Menu style={styles.menu}>
                 <MenuTrigger>
                     <Image source={require('../assets/menu.png')} style={{width:40, height:40}}/>
@@ -75,10 +101,10 @@ export default class FondScreen extends Component {
           </View>
 
           <View style={styles.box, styles.anotherbox}>
-              <Text style={styles.textik}>Zadajte čiastku pre zvoleného miláčika!</Text>
+              <Text style={styles.textik}>Vyplňte údaje pre adopciu miláčika!</Text>
                 <SliderBox
                     images={this.state.images}
-                    sliderBoxHeight={240}
+                    sliderBoxHeight={180}
                     sliderBoxWidth={start}
                     sliderBox
                     dotColor="#92FCE9"
@@ -108,29 +134,59 @@ export default class FondScreen extends Component {
 
           <View style={styles.box, styles.box_second}>
             <Formik
-              initialValues={{ fond: ''}}
-              onSubmit={values => this.checkFond(values)}
+              initialValues={{ namesurname: '', street:'', zip:'', city:''}}
+              onSubmit={values => this.checkAdoption(values)}
             >
               {({ values, handleChange, setFieldTouched, handleSubmit }) => (
               <View style={styles.formContainer}>
-                <View style={styles.box, styles.box_half}>
                   <Input
-                    leftIcon={{ type: 'ionicon', name: 'logo-euro', color: 'grey'}}
-                    value={values.fond}
+                    leftIcon={{ type: 'ionicon', name: 'person-outline', color: 'grey'}}
+                    label='Meno a priezvisko'
+                    value={values.namesurname}
                     style={styles.inputStyle}
-                    onChangeText={handleChange('fond')}
-                    onBlur={() => setFieldTouched('fond')}
-                    placeholder="5"
+                    onChangeText={handleChange('namesurname')}
+                    onBlur={() => setFieldTouched('namesurname')}
+                    placeholder="Lilly Penson"
                   />   
-                  <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errorfond}</Text>
-                </View>
-                <View style={styles.box, styles.box_quartersecond}>
+                  <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errorName}</Text>
+                  <Input
+                    leftIcon={{ type: 'ionicon', name: 'business-outline', color: 'grey'}}
+                    label='Ulica a číslo'
+                    value={values.street}
+                    style={styles.inputStyle}
+                    onChangeText={handleChange('street')}
+                    onBlur={() => setFieldTouched('street')}
+                    placeholder="Javorová 8"
+                  />     
+                  <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errorStreet}</Text>
+                  <Input
+                    leftIcon={{ type: 'ionicon', name: 'business-outline', color: 'grey'}}
+                    label='PSČ'
+                    value={values.zip}
+                    style={styles.inputStyle}
+                    onChangeText={handleChange('zip')}
+                    onBlur={() => setFieldTouched('zip')}
+                    maxLength={5} 
+                    placeholder="099345"
+                  />     
+                  <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errorZip}</Text>
+                  <Input
+                    leftIcon={{ type: 'ionicon', name: 'business-outline', color: 'grey'}}
+                    label='Mesto'
+                    value={values.city}
+                    style={styles.inputStyle}
+                    onChangeText={handleChange('city')}
+                    onBlur={() => setFieldTouched('city')}
+                    placeholder="Žilina"
+                  />     
+                  <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errorCity}</Text>
+                
                   <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                         <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
                             <Text style={styles.btntext}>POTVRDIŤ</Text>
                         </LinearGradient>
                   </TouchableOpacity>
-                </View>
+                
              </View>
              )}
             </Formik> 
@@ -159,9 +215,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   box_second: {
-    flex: 0.05,
+    flex: 0.8,
     padding: start,
-    marginTop: 50
   },
   background: {
     position: 'absolute',
@@ -171,14 +226,14 @@ const styles = StyleSheet.create({
     height: height,
   },
   anotherbox:{
-    flex:0.4,
-    marginBottom: 30,
+    flex:0.35,
+    marginBottom: 20,
   },
   box_quartersecond: {
     flex: 0.05,
-    alignItems: 'center',
-    padding: width/10,
-    justifyContent:'center',
+    alignItems: 'flex-start',
+    padding: start,
+    justifyContent:'top',
     marginTop: 20
   },
   back:{
@@ -230,12 +285,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   inputStyle: {
-    padding: 20,
+    padding: 12,
+    height:40,
+    width:300,
     marginBottom: 5,
-    fontSize: 15,
-    alignSelf: 'center',
+    fontSize: 10,
     backgroundColor: 'white',
-    flex: .5,
     borderRadius: 10,
   },
 });

@@ -78,7 +78,7 @@ function KindScreen(props) {
                   </MenuTrigger>
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
-                    <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
+                    <MenuOption onSelect={() => props.navigation.navigate('Filter')} text='Vyhľadať' />
                     <MenuOption onSelect={() => LogOut(props) } text='Odhlásiť sa' />
                   </MenuOptions>
                 </Menu>      

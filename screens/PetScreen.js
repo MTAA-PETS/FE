@@ -56,7 +56,7 @@ class PetScreen extends Component {
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
                     <MenuOption onSelect={() => this.props.navigation.navigate('MyProfile')} text='Moje konto' />
-                    <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
+                    <MenuOption onSelect={() => this.props.navigation.navigate('Filter')} text='Vyhľadať' />
                     <MenuOption onSelect={() => LogOut(this.props) } text='Odhlásiť sa' />
                 </MenuOptions>
             </Menu>
@@ -114,9 +114,9 @@ class PetScreen extends Component {
                             </LinearGradient>
                     </TouchableOpacity>
                 </View>
-                <View style = {{alignItems:'flex-end', justifyContent: 'right'}}>
-                    <TouchableOpacity style={styles.button}>
-                        <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
+                <View style = {{alignItems:'flex-end', justifyContent: 'right'}} >
+                    <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Adopt')}>
+                        <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}> 
                             <Text style={styles.btntext}>ADOPCIA</Text>
                         </LinearGradient>
                     </TouchableOpacity>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   anotherbox:{
     flex:0.4,
-    marginBottom: 30,
+    marginBottom: 10,
   },
   data:{
     flex:0.6,
