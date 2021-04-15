@@ -2,6 +2,7 @@ import 'react-native-gesture-handler'
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { MenuProvider } from 'react-native-popup-menu';
 import ProfileScreen from './screens/ProfileScreen';
 import HomeScreen from './screens/HomeScreen';
 import RegScreen from './screens/RegScreen';
@@ -9,8 +10,10 @@ import LogScreen from './screens/LogScreen';
 import MainScreen from './screens/MainScreen';
 import SpeciesScreen from './screens/SpeciesScreen';
 import KindScreen from './screens/KindScreen';
-import { MenuProvider } from 'react-native-popup-menu';
 import PetScreen from './screens/PetScreen';
+import FondScreen from './screens/FondScreen';
+import FilterScreen from './screens/FilterScreen';
+import FilteredScreen from './screens/FilteredScreen';
 
 const Stack = createStackNavigator()
 
@@ -52,6 +55,18 @@ class App extends React.Component{
             <Stack.Screen 
               name = "Pet"
               component = { PetScreen }
+            />
+            <Stack.Screen 
+              name = "Fond"
+              component = { FondScreen }
+            />
+            <Stack.Screen 
+              name = "Filter"
+              component = { FilterScreen }
+            />
+            <Stack.Screen 
+              name = "Filtered"
+              component = { FilteredScreen }
             />
           </Stack.Navigator>
         </NavigationContainer>

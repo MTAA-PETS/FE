@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { TextInput, Alert, StyleSheet, Text, Button, View, TouchableOpacity, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ErrorMessage, Formik } from 'formik';
+import { Formik } from 'formik';
 import { Ionicons } from '@expo/vector-icons';
 import { Input } from 'react-native-elements';
 

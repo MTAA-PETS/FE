@@ -24,6 +24,7 @@
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-credit-card-input": "^0.4.1",
+    "react-native-dropdown-picker": "^4.0.9",
     "react-native-elements": "^3.3.2",
     "react-native-floating-title-text-input": "^1.0.7",
     "react-native-gallery-swiper": "^1.26.4",

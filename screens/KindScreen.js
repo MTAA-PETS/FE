@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'rea
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import PetsImgs from './PetsImgs.js';
+import PetsImgs from '../PetsImgs.js';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
 import {LogOut} from './MainScreen';
 

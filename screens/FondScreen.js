@@ -3,6 +3,8 @@ import { Image, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'rea
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
+import { Formik } from 'formik';
+import { Input } from 'react-native-elements';
 import {LogOut} from './MainScreen';
 import { SliderBox } from "react-native-image-slider-box";
 import KindImgs from '../KindImgs';
@@ -14,27 +16,36 @@ var box_count = 3;
 var box_height = height / box_count;
 var start = width / 10;
 
-class PetScreen extends Component {
+global.pet = 'Fretka domáca';
+
+export default class FondScreen extends Component {
   constructor(){
     super()
     this.state={
-        name: "",
-        age: "",
-        weight: "",
-        food: "",
-        info: "",
-        price: "",
-        images: []
+        images: [],
+        errorfond: '',
     }
   }
 
+  errorfond(){
+    this.setState({errorfond: 'Minimálna čiastka je 5€'})
+  }
+
   componentDidMount(){
-    this.getPet();
     var imgs = [];
     imgs = KindImgs[global.pet];
     this.setState({images: imgs})
   }
 
+  checkFond(values){
+    if(values['fond']<5.0){
+      this.errorfond();
+    }
+    else{
+      this.setState({errorfond: ''});
+      //tu bude prepnutie
+    }
+  }
   
   render(){
     return(
@@ -48,7 +59,7 @@ class PetScreen extends Component {
             <TouchableOpacity onPress={() => {global.species=""; this.props.navigation.goBack()}}>
                 <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
             </TouchableOpacity>
-            <Text style={{alignItems: 'flex-start', fontSize: 17, fontWeight: 'bold'}}>{global.pet}</Text>
+            <Text style={styles.title}>Podpora</Text>
             <Menu style={styles.menu}>
                 <MenuTrigger>
                     <Image source={require('../assets/menu.png')} style={{width:40, height:40}}/>
@@ -62,7 +73,8 @@ class PetScreen extends Component {
             </Menu>
           </View>
 
-          <View style={styles.anotherbox}>
+          <View style={styles.box, styles.anotherbox}>
+              <Text style={styles.textik}>Zadajte čiastku pre zvoleného miláčika!</Text>
                 <SliderBox
                     images={this.state.images}
                     sliderBoxHeight={240}
@@ -94,66 +106,39 @@ class PetScreen extends Component {
         
 
           <View style={styles.box, styles.box_second}>
-              <View style={styles.data}>
-                <Text style={styles.title}>Špecifikácia</Text>
-                <Text style={styles.textik}>{this.state.name}</Text>
-                <Text style={styles.textik}>{this.state.age}</Text>
-                <Text style={styles.textik}>{this.state.weight}</Text>
-                <Text style={styles.textik}>{this.state.food}</Text>
-                <Text style={styles.textik}>{this.state.price}</Text>
-              </View>
-              <View style={styles.info}>
-                <Text style={styles.title}>Popis</Text>
-                <Text style={styles.textik}>{this.state.info}</Text>
-              </View>
-              <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                <View style= {{alignItems:'flex-start', justifyContent: 'left'}}>
-                    <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Fond')}>
-                            <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
-                                <Text style={styles.btntext}>PODPORA</Text>
-                            </LinearGradient>
-                    </TouchableOpacity>
+            <Formik
+              initialValues={{ fond: ''}}
+              onSubmit={values => this.checkFond(values)}
+            >
+              {({ values, handleChange, setFieldTouched, handleSubmit }) => (
+              <View style={styles.formContainer}>
+                <View style={styles.box, styles.box_half}>
+                  <Input
+                    leftIcon={{ type: 'ionicon', name: 'logo-euro', color: 'grey'}}
+                    value={values.fond}
+                    style={styles.inputStyle}
+                    onChangeText={handleChange('fond')}
+                    onBlur={() => setFieldTouched('fond')}
+                    placeholder="5"
+                  />   
+                  <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errorfond}</Text>
                 </View>
-                <View style = {{alignItems:'flex-end', justifyContent: 'right'}}>
-                    <TouchableOpacity style={styles.button}>
+                <View style={styles.box, styles.box_quartersecond}>
+                  <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                         <LinearGradient colors={['#3D66F5', '#76FFEF']} style={styles.button}>
-                            <Text style={styles.btntext}>ADOPCIA</Text>
+                            <Text style={styles.btntext}>PODPORIŤ</Text>
                         </LinearGradient>
-                    </TouchableOpacity>
+                  </TouchableOpacity>
                 </View>
-              </View>
+             </View>
+             )}
+            </Formik> 
           </View>
 
-          </LinearGradient>
+        </LinearGradient>
       </View>
     );      
-  }
-  getPet(){
-
-    const url = 'https://mtaa-pets.herokuapp.com/pets/?breed='+global.pet;
-    const options = {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'text/plain'
-        },
-      };
-      
-      fetch(url, options)
-      .then(result => {
-          if (!result.ok) throw result;
-          return result.json();
-      })
-      .then(result => {
-          this.setState({name: "Meno: " + result[0]['name']});
-          this.setState({age: "Vek(roky): " + result[0]['age']});
-          this.setState({weight: "Váha: " + result[0]['weight'] + " kg"});
-          this.setState({food: "Potrava: " + result[0]['food']});
-          this.setState({info: result[0]['info']});
-          this.setState({price: "Cena: " + result[0]['price'] + "€"});
-      })
-  }
-
+  } 
 }
 
 const styles = StyleSheet.create({
@@ -173,8 +158,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   box_second: {
-    flex: 0.8,
-    padding: start
+    flex: 0.05,
+    padding: start,
+    marginTop: 50
   },
   background: {
     position: 'absolute',
@@ -187,25 +173,20 @@ const styles = StyleSheet.create({
     flex:0.4,
     marginBottom: 30,
   },
-  data:{
-    flex:0.6,
-    backgroundColor: 'white',
-    marginBottom: 15,
-    borderRadius: 10,
+  box_quartersecond: {
+    flex: 0.05,
+    alignItems: 'center',
+    padding: start,
+    justifyContent:'center',
+    marginTop: 20
   },
-  info:{
-    flex:0.35,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    marginBottom: 10
-    },
   back:{
     justifyContent: 'left',
     alignItems: 'flex-start',
     paddingBottom: 10,
   },
   button: {
-    width: '120%',
+    width: '90%',
     borderRadius:20,
     padding: 5, 
     height: 45,
@@ -225,9 +206,9 @@ const styles = StyleSheet.create({
   title: {
     alignItems: 'flex-start',
     fontSize: 26,
-    margin: 8,
+    margin: 10,
+    fontWeight: 'bold'
     //fontFamily: 'Lucida',
-    color: 'blue',
   },
   menu:{
     justifyContent: 'right',
@@ -242,11 +223,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   textik:{
-    fontSize: 16,
+    fontSize: 18,
     alignItems: 'flex-start',
-    paddingLeft: 10,
-    paddingBottom: 10
-  }
+    paddingLeft: 20,
+    paddingBottom: 20
+  },
+  inputStyle: {
+    padding: 20,
+    marginBottom: 5,
+    fontSize: 15,
+    backgroundColor: 'white',
+    flex: .5,
+    borderRadius: 10,
+  },
 });
 
 const optionsStyles = {
@@ -269,5 +258,3 @@ const optionsStyles = {
     margin: 8,
   }
 };
-
-export default PetScreen;
