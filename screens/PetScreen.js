@@ -48,14 +48,14 @@ class PetScreen extends Component {
             <TouchableOpacity onPress={() => {global.species=""; this.props.navigation.goBack()}}>
                 <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
             </TouchableOpacity>
-            <Text style={{alignItems: 'flex-start', fontSize: 17}}>{global.pet}</Text>
+            <Text style={{alignItems: 'flex-start', fontSize: 17, fontWeight: 'bold'}}>{global.pet}</Text>
             <Menu style={styles.menu}>
                 <MenuTrigger>
-                    <Image source={require('./assets/menu.png')} style={{width:40, height:40}}/>
+                    <Image source={require('../assets/menu.png')} style={{width:40, height:40}}/>
                     <Text>Menu</Text>
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
-                    <MenuOption onSelect={() => props.navigation.navigate('MyProfile')} text='Moje konto' />
+                    <MenuOption onSelect={() => this.props.navigation.navigate('MyProfile')} text='Moje konto' />
                     <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
                     <MenuOption onSelect={() => LogOut(this.props) } text='Odhlásiť sa' />
                 </MenuOptions>
@@ -71,8 +71,6 @@ class PetScreen extends Component {
                     dotColor="#92FCE9"
                     inactiveDotColor="#90A4AE"
                     paginationBoxVerticalPadding={20}
-                    autoplay
-                    circleLoop
                     resizeMethod={'scale'}
                     paginationBoxStyle={{
                         position: "absolute",

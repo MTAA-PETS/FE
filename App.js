@@ -2,16 +2,15 @@ import 'react-native-gesture-handler'
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'expo-status-bar';
-import HomeScreen from './HomeScreen';
-import RegScreen from './RegScreen';
-import LogScreen from './LogScreen';
-import MainScreen from './MainScreen';
-import SpeciesScreen from './SpeciesScreen';
-import KindScreen from './KindScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import HomeScreen from './screens/HomeScreen';
+import RegScreen from './screens/RegScreen';
+import LogScreen from './screens/LogScreen';
+import MainScreen from './screens/MainScreen';
+import SpeciesScreen from './screens/SpeciesScreen';
+import KindScreen from './screens/KindScreen';
 import { MenuProvider } from 'react-native-popup-menu';
-import ProfileScreen from './ProfileScreen';
-import PetScreen from './PetScreen';
+import PetScreen from './screens/PetScreen';
 
 const Stack = createStackNavigator()
 

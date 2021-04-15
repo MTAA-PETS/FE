@@ -41,7 +41,7 @@ class ProfileScreen extends Component {
             <Text style={{alignItems: 'flex-start', fontSize: 30}}>Moje konto</Text>
             <Menu style={styles.menu}>
                 <MenuTrigger>
-                    <Image source={require('./assets/menu.png')} style={{width:40, height:40}}/>
+                    <Image source={require('../assets/menu.png')} style={{width:40, height:40}}/>
                     <Text>Menu</Text>
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>

@@ -2,8 +2,8 @@ import React ,{ useState, useEffect }  from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { LinearGradient } from 'expo-linear-gradient';
-import PetsImgs from './PetsImgs.js';
 import { Ionicons } from '@expo/vector-icons';
+import PetsImgs from './PetsImgs.js';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
 import {LogOut} from './MainScreen';
 
@@ -13,11 +13,11 @@ var box_count = 2;
 var box_height = height / box_count;
 var url = ""
 
-global.kind=""
+global.pet=""
 
-function getSpecies(){
+function getKinds(){
     const [data, setData] = useState([])
-    url = 'https://mtaa-pets.herokuapp.com/pets/?species='+global.species;
+    url = 'https://mtaa-pets.herokuapp.com/pets/?kind='+global.kind;
     const options = {
         method: 'GET',
         headers: {
@@ -37,23 +37,29 @@ function getSpecies(){
     }
   }
 
-function SpeciesScreen(props) {
 
-    var trash = getSpecies();
+function KindScreen(props) {
+
+    var trash = getKinds();
     var res = []
     if (trash!=undefined){
       res = trash
     }
     var reslength = res.length;
     var cpavok = []
-    for (var j = 0; j < reslength; j++) {
-      cpavok.push(res[j][0]);
-    }
+    for (var i = 0; i < reslength; i++) {
+      cpavok.push(res[i][0]);
+    } 
 
     const [items] = React.useState([]);
     for (var i = 0; i < reslength; i++) {
       var src = PetsImgs[cpavok[i]]
-      items.push({name: cpavok[i], source: src});
+      var namik = cpavok[i]
+      if(namik.length > 16){
+        namik = namik.slice(0,13);
+        namik += "..."
+      }
+      items.push({name: cpavok[i], name2: namik, source: src});
     }
 
     return (
@@ -62,12 +68,12 @@ function SpeciesScreen(props) {
                 colors={['#5EF9D4', 'white']}
                 style = { styles.background }>
             <View style={styles.box, styles.box_first}>
-                <TouchableOpacity onPress={() => {global.species=""; props.navigation.goBack()}}>
-                  <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
-                </TouchableOpacity>    
+                <TouchableOpacity onPress={() => {global.kind=""; props.navigation.goBack()}} style={styles.back}>
+                  <Ionicons name="chevron-back-outline" size={40}/>
+                </TouchableOpacity>   
                 <Menu style={styles.menu}>
                   <MenuTrigger>
-                    <Image source={require('./assets/menu.png')} style={{width:40, height:40}}/>
+                    <Image source={require('../assets/menu.png')} style={{width:40, height:40}}/>
                     <Text>Menu</Text>
                   </MenuTrigger>
                   <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
@@ -75,11 +81,11 @@ function SpeciesScreen(props) {
                     <MenuOption onSelect={() => alert(`Vyhľadať`)} text='Vyhľadať' />
                     <MenuOption onSelect={() => LogOut(props) } text='Odhlásiť sa' />
                   </MenuOptions>
-                </Menu>    
+                </Menu>      
             </View>
             <View style={styles.box, styles.box_second}>
-                
-                <Text style={styles.title}>{global.species}</Text>
+
+                <Text style={styles.title}>{global.kind}</Text>
                 <Text style={styles.undertitle}>Vyberte si svojho miláčika!</Text>
 
                 <FlatGrid
@@ -89,9 +95,9 @@ function SpeciesScreen(props) {
                     spacing={20}
                     renderItem={({ item }) => (
                     <View style={[styles.itemContainer, { backgroundColor: 'white', borderRadius:20 }]}>
-                        <TouchableOpacity onPress={() => {global.kind=item.name; props.navigation.navigate('Kind')}}>
+                        <TouchableOpacity onPress={() => {global.pet=item.name; props.navigation.navigate('Pet')}}>
                             <Image source={item.source} style={{width: 100, height: 100}}/>
-                            <Text style={styles.itemName}>{item.name}</Text>
+                            <Text style={styles.itemName}>{item.name2}</Text>
                         </TouchableOpacity>
                     </View>
                     )}
@@ -105,23 +111,23 @@ function SpeciesScreen(props) {
   
   const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#5EF9D4',
-      },
-      box: {
-        height: box_height,
-      },
-      box_first: {
-        flex: 0.15,
-        padding: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      },
-      box_second: {
-        flex: 0.85,
-      },
+      flex: 1,
+      flexDirection: 'column',
+      backgroundColor: '#5EF9D4',
+    },
+    box: {
+      height: box_height,
+    },
+    box_first: {
+      flex: 0.15,
+      padding: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    box_second: {
+      flex: 0.85,
+    },
     background: {
         position: 'absolute',
         left: 0,
@@ -133,12 +139,6 @@ function SpeciesScreen(props) {
       justifyContent: 'left',
       alignItems: 'flex-start',
       paddingBottom: 10,
-    },
-    gradient: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems:'center',
-      borderRadius: 30
     },
     title: {
         alignItems: 'flex-start',
@@ -202,6 +202,5 @@ function SpeciesScreen(props) {
     },
   };
   
- 
 
-export default SpeciesScreen;
+export default KindScreen;
