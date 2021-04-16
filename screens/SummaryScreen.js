@@ -39,8 +39,7 @@ class SummaryScreen extends React.Component {
    }
 
    addFond(){
-    const url = 'https://mtaa-pets.herokuapp.com/pets/addFond/';
-    var id = 40;
+    const url = 'https://mtaa-pets.herokuapp.com/pets/addFond/'+global.id_pet;
     const options = {
       method: 'PUT',
       headers: {
@@ -50,7 +49,7 @@ class SummaryScreen extends React.Component {
         'amount': global.fond
       })
     };
-    fetch(url+id, options)
+    fetch(url, options)
       .then(result => {
           console.log("PICOVINA");
           //if (!result.ok) throw result;
