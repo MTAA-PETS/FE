@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
 var { height } = Dimensions.get('window');
 var { width } = Dimensions.get('window');
@@ -23,15 +24,53 @@ class SummaryScreen extends React.Component {
        this.getInfo();
    }
 
+   
+
    getInfo(){
        if (global.from == 'adopt'){
         this.setState({image: require('../assets/adopt.jpg')});
         this.setState({undertitle: 'Vaše zvieratko je na ceste!'});
+        this.addInvoice();
        }
        else{
         this.setState({image: require('../assets/fond.jpg')});
         this.setState({undertitle: 'Ďakujeme za príspevok!'});
+        this.addFond();
        }
+   }
+
+   addFond(){
+    const url = 'https://mtaa-pets.herokuapp.com/pets/addFond/';
+    var id = 40;
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      body: JSON.stringify({
+        'amount': global.fond
+      })
+    };
+    fetch(url+id, options)
+      .then(result => {
+          console.log("PICOVINA");
+          //if (!result.ok) throw result;
+          return result.json();
+      })
+   }
+
+   addInvoice(){
+    const url = 'https://mtaa-pets.herokuapp.com/user/addInvoice/';
+    useEffect(() => {
+      const options = {
+        method: 'PUT',
+      };
+      fetch(url, options)
+        .then(result => {
+          console.log("PICOVINA");
+          return result.json();
+        })
+    },[]);
    }
 
     render(){

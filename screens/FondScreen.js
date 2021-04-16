@@ -15,7 +15,7 @@ var { width } = Dimensions.get('window');
 var box_count = 3;
 var box_height = height / box_count;
 var start = width / 6;
-
+global.fond = 0;
 global.from = '';
 
 export default class FondScreen extends Component {
@@ -43,6 +43,7 @@ export default class FondScreen extends Component {
     }
     else{
       this.setState({errorfond: ''});
+      global.fond = values['fond'];
       global.from = 'fond';
       this.props.navigation.navigate('Summary');
     }

@@ -92,7 +92,6 @@ export default function FilteredScreen(props){
             </View>
             <View style={styles.box, styles.box_second}>
 
-                <Text style={styles.title}>{global.kind}</Text>
                 <Text style={styles.undertitle}>Počet výsledkov: {count}</Text>
 
                 <FlatGrid

@@ -13,7 +13,7 @@ var { width } = Dimensions.get('window');
 var box_count = 3;
 var box_height = height / box_count;
 var start = width / 10;
-
+global.id_pet = 0;
 class PetScreen extends Component {
   constructor(){
     super()
@@ -145,6 +145,7 @@ class PetScreen extends Component {
           return result.json();
       })
       .then(result => {
+          global.id_pet = result[0]['id'];
           this.setState({name: "Meno: " + result[0]['name']});
           this.setState({age: "Vek(roky): " + result[0]['age']});
           this.setState({weight: "Váha: " + result[0]['weight'] + " kg"});
