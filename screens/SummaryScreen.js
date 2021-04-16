@@ -2,7 +2,6 @@ import React, { Component, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import axios from 'axios';
 
 var { height } = Dimensions.get('window');
 var { width } = Dimensions.get('window');
@@ -60,17 +59,14 @@ class SummaryScreen extends React.Component {
    }
 
    addInvoice(){
-    const url = 'https://mtaa-pets.herokuapp.com/user/addInvoice/';
-    useEffect(() => {
-      const options = {
-        method: 'PUT',
-      };
-      fetch(url, options)
-        .then(result => {
-          console.log("PICOVINA");
-          return result.json();
+
+        fetch('https://mtaa-pets.herokuapp.com/user/addInvoice/', {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }
         })
-    },[]);
    }
 
     render(){
