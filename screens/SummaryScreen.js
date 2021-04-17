@@ -8,6 +8,7 @@ var { width } = Dimensions.get('window');
 
 var box_count = 3;
 var box_height = height / box_count;
+var daco, suma;
 
 class SummaryScreen extends React.Component {
 
@@ -16,6 +17,9 @@ class SummaryScreen extends React.Component {
         this.state={
             image: '',
             undertitle: '',
+            text: '',
+            doručenie: '',
+            celkova_suma: '',
      }
    }
 
@@ -51,21 +55,65 @@ class SummaryScreen extends React.Component {
     };
     fetch(url, options)
       .then(result => {
-          console.log("PICOVINA");
-          //if (!result.ok) throw result;
           return result.json();
+      }).then(()=> {
+        fetch('https://mtaa-pets.herokuapp.com/pets/fond/'+global.pet)
+        .then(result => {
+          if (!result.ok) throw result;
+          return result.json();
+        })
+        .then(result => {
+          //console.log(result['fond']);
+          this.setState({text: 'Vďaka tvojmu príspevku má '+ global.pet +' už ' + result['fond'] + '€.'});
+        })
       })
    }
 
    addInvoice(){
-
-        fetch('https://mtaa-pets.herokuapp.com/user/addInvoice/', {
-          method: 'PUT',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }
+    const url = 'https://mtaa-pets.herokuapp.com/invoice/';
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      body: JSON.stringify({
+        'id_pet': global.id_pet,
+        'id_user': global.idcko
+      })
+    };
+    const url2 = 'https://mtaa-pets.herokuapp.com/user/addInvoice/';
+    const options2 = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+    };
+    const url3 = 'https://mtaa-pets.herokuapp.com/pets/delete/';
+    const options3 = {
+      method: 'DEL',
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      body: JSON.stringify({
+        'id': global.id_pet
+      })
+    };
+    fetch(url, options)
+      .then(result => {
+        this.setState({text: 'Adopcia '+ global.price + '€.'});
+        this.setState({doručenie: 'Doručenie 10€.'});
+        this.setState({celkova_suma: 'Celková cena ' + (parseFloat(global.price)+10) + '€.'});
+      }).then(() => {
+        fetch(url2, options2)
+        .then(response => {
+          console.log("USPECH");
         })
+      }).then(()=> {
+        fetch(url3, options3)
+        .then(vysledok => {
+          console.log("VYMAZANY CPAVOK");
+        })
+      })
    }
 
     render(){
@@ -81,6 +129,9 @@ class SummaryScreen extends React.Component {
                     <Text style={styles.title}>Potvrdenie objednávky</Text>
                     <Image source={this.state.image} style={{width: 300, height: 300, resizeMode: 'contain'}} /> 
                     <Text style = {styles.undertitle}>{this.state.undertitle}</Text>
+                    <Text>{this.state.text}</Text>
+                    <Text>{this.state.doručenie}</Text>
+                    <Text>{this.state.celkova_suma}</Text>
                 </View>
 
                 <View style={styles.box, styles.box_quarter}>

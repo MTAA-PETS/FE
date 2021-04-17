@@ -14,6 +14,7 @@ var box_count = 3;
 var box_height = height / box_count;
 var start = width / 10;
 global.id_pet = 0;
+global.price = 0;
 class PetScreen extends Component {
   constructor(){
     super()
@@ -152,6 +153,7 @@ class PetScreen extends Component {
           this.setState({food: "Potrava: " + result[0]['food']});
           this.setState({info: result[0]['info']});
           this.setState({price: "Cena: " + result[0]['price'] + "€"});
+          global.price = result[0]['price'];
       })
   }
 
