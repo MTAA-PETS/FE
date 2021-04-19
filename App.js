@@ -27,7 +27,7 @@ class App extends React.Component{
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen 
-              name = "Homepage"
+              name = "Home"
               component = {HomeScreen }
             />
             <Stack.Screen 

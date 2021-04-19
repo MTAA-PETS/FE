@@ -90,7 +90,7 @@ class SummaryScreen extends React.Component {
     };
     const url3 = 'https://mtaa-pets.herokuapp.com/pets/delete/';
     const options3 = {
-      method: 'DEL',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'text/plain'
       },
@@ -100,9 +100,9 @@ class SummaryScreen extends React.Component {
     };
     fetch(url, options)
       .then(result => {
-        this.setState({text: 'Adopcia '+ global.price + '€.'});
-        this.setState({doručenie: 'Doručenie 10€.'});
-        this.setState({celkova_suma: 'Celková cena ' + (parseFloat(global.price)+10) + '€.'});
+        this.setState({text: 'Adopcia '+ global.price + '€'});
+        this.setState({doručenie: 'Doručenie 10€'});
+        this.setState({celkova_suma: 'Celková cena ' + (parseFloat(global.price)+10) + '€'});
       }).then(() => {
         fetch(url2, options2)
         .then(response => {
@@ -129,9 +129,9 @@ class SummaryScreen extends React.Component {
                     <Text style={styles.title}>Potvrdenie objednávky</Text>
                     <Image source={this.state.image} style={{width: 300, height: 300, resizeMode: 'contain'}} /> 
                     <Text style = {styles.undertitle}>{this.state.undertitle}</Text>
-                    <Text>{this.state.text}</Text>
-                    <Text>{this.state.doručenie}</Text>
-                    <Text>{this.state.celkova_suma}</Text>
+                    <Text style = {styles.info}>{this.state.text}</Text>
+                    <Text style = {styles.info}>{this.state.doručenie}</Text>
+                    <Text style = {styles.info}>{this.state.celkova_suma}</Text>
                 </View>
 
                 <View style={styles.box, styles.box_quarter}>
@@ -188,6 +188,10 @@ const styles = StyleSheet.create({
     undertitle: {
         fontSize: 20,
         color: 'grey',
+        paddingBottom: 10
+    },
+    info:{
+      fontSize: 16,
     },
     gradient: {
       flex: 1,

@@ -1,9 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Image, TextInput, Alert, StyleSheet, Text, Button, View, TouchableOpacity, Dimensions } from 'react-native';
+import { Image, StyleSheet, Text,View, TouchableOpacity, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import {Menu, MenuOptions,MenuOption, MenuTrigger} from 'react-native-popup-menu';
 import Moment from 'moment';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 import {LogOut} from './MainScreen';
 
 var { height } = Dimensions.get('window');
@@ -14,64 +17,22 @@ var box_height = height / box_count;
 var start = width / 10;
 
 class ProfileScreen extends Component {
-  constructor(){
-    super()
-    this.state={nick: ""}
-    this.state={faktury: ""}
-    this.state={email: ""}
-    this.state={narodenie: ""}   
-  }
+  state={
+    nick: "",
+    faktury: "",
+    email: "",
+    narodenie: "",
+    image: null,
+    profile: "Tu môžete vložiť novú profilovku"
+
+  };
 
   componentDidMount(){
     this.getUser();
+    this.getPermissionAsync();
+    this.getImage();
   }
-  
-  render(){
-    return(
-      <View style={styles.box, styles.container}>
 
-          <LinearGradient
-                colors={['#5EF9D4', 'white']}
-                style = { styles.background }>
-
-          <View style={styles.box, styles.box_first}>
-            <TouchableOpacity onPress={() => {global.species=""; this.props.navigation.goBack()}}>
-                <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
-            </TouchableOpacity>
-            <Text style={{alignItems: 'flex-start', fontSize: 30}}>Moje konto</Text>
-            <Menu style={styles.menu}>
-                <MenuTrigger>
-                    <Image source={require('../assets/menu.png')} style={{width:40, height:40}}/>
-                    <Text>Menu</Text>
-                </MenuTrigger>
-                <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
-                    <MenuOption disabled={true} text='Moje konto' />
-                    <MenuOption onSelect={() => this.props.navigation.navigate('Filter')} text='Vyhľadať' />
-                    <MenuOption onSelect={() => LogOut(this.props) } text='Odhlásiť sa' />
-                </MenuOptions>
-            </Menu>
-          </View>
-
-          <View style={styles.box, styles.box_second}>
-              <View style={styles.data}>
-                <Text style={styles.title}>Osobné údaje</Text>
-                <TouchableOpacity onPress={() => alert('Tu sa bude dať vložiť')} style={{backgroundColor: 'grey', width: 50, height: 50, margin: 20}}>
-                  <Text>Profilovka</Text>
-                </TouchableOpacity>
-                <Text style={styles.textik}>{this.state.email}</Text>
-                <Text style={styles.textik}>{this.state.nick}</Text>
-                <Text style={styles.textik}>{this.state.narodenie}</Text>
-              </View>
-              <View style={styles.invoices}>
-                <Text style={styles.title}>Faktúry</Text>
-                <Text style={styles.textik}>{this.state.faktury}</Text>
-              </View>
-          </View>
-
-          </LinearGradient>
-      </View>
-    );      
-  }
   getUser(){
 
     const url = 'https://mtaa-pets.herokuapp.com/user/'+global.idcko+'/';
@@ -110,6 +71,124 @@ class ProfileScreen extends Component {
       })
   }
 
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+      if (status !== 'granted') {
+        alert('Nie sú udelené práva do galérie');
+      }
+    }
+  }
+
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    //console.log(result);
+
+    if (!result.cancelled) {
+      //this.setState({ image: result.uri });
+      const url = 'https://mtaa-pets.herokuapp.com/user/addImage/';
+      const options = {
+        method: 'PUT',
+        headers: {'Content-Type': 'text/plain'},
+        body: JSON.stringify({
+          'id': global.idcko,
+          'img': result.uri
+        })
+      };
+      fetch(url, options)
+      .then(result => {
+          console.log("Putol som image");
+          this.getImage();  
+          this.setState({profile: ""});
+      })
+    }
+
+  };
+
+  getImage(){
+    const url = 'https://mtaa-pets.herokuapp.com/user/getImage/' + global.idcko + '/';
+    console.log(url);
+    const options = {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'text/plain'
+        },
+      };
+      
+      fetch(url, options)
+      .then(result => {
+          if (!result.ok) throw result;
+          return result.json();
+      })
+      .then(result => {
+          console.log("tu som");
+          if(result['data']!= "{}"){
+            this.setState({image: result['data']});
+            this.setState({profile: ""});
+          }
+      })
+  }
+
+  
+  render(){
+
+    var { image } = this.state;
+
+    return(
+      
+      <View style={styles.box, styles.container}>
+
+          <LinearGradient
+                colors={['#5EF9D4', 'white']}
+                style = { styles.background }>
+
+          <View style={styles.box, styles.box_first}>
+            <TouchableOpacity onPress={() => {global.species=""; this.props.navigation.goBack()}}>
+                <Ionicons name="chevron-back-outline" size={40} style={styles.back}/>
+            </TouchableOpacity>
+            <Text style={{alignItems: 'flex-start', fontSize: 30}}>Moje konto</Text>
+            <Menu style={styles.menu}>
+                <MenuTrigger>
+                    <Image source={require('../assets/menu.png')} style={{width:40, height:40}}/>
+                    <Text>Menu</Text>
+                </MenuTrigger>
+                <MenuOptions customStyles={optionsStyles} optionsContainerStyle={styles.menuOptions}>
+                    <MenuOption disabled={true} text='Moje konto' />
+                    <MenuOption onSelect={() => this.props.navigation.navigate('Filter')} text='Vyhľadať' />
+                    <MenuOption onSelect={() => LogOut(this.props) } text='Odhlásiť sa' />
+                </MenuOptions>
+            </Menu>
+          </View>
+
+          <View style={styles.box, styles.box_second}>
+              <View style={styles.data}>
+                <Text style={styles.title}>Osobné údaje</Text>
+                <TouchableOpacity style = {{width: 90, height: 110, backgroundColor: 'gray', borderRadius: 10, justifyContent: 'center', alignSelf:'center'}} onPress={this._pickImage}>
+                  <Text style = {{textAlign: 'center'}}>{this.state.profile}</Text>
+                  {image && <Image source={{ uri: image }} style={{ width: 90, height: 110, resizeMode: 'cover' }} />}
+                </TouchableOpacity>
+                <Text style={styles.textik}>{this.state.email}</Text>
+                <Text style={styles.textik}>{this.state.nick}</Text>
+                <Text style={styles.textik}>{this.state.narodenie}</Text>
+              </View>
+              <View style={styles.invoices}>
+                <Text style={styles.title}>Faktúry</Text>
+                <Text style={styles.textik}>{this.state.faktury}</Text>
+              </View>
+          </View>
+
+          </LinearGradient>
+      </View>
+    );      
+  }
+  
 }
 
 const styles = StyleSheet.create({
@@ -179,7 +258,7 @@ const styles = StyleSheet.create({
     padding : 50
   },
   title: {
-    alignItems: 'flex-start',
+    textAlign: 'center',
     fontSize: 26,
     margin: 8,
     //fontFamily: 'Lucida',

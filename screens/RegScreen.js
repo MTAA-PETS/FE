@@ -24,6 +24,7 @@ class RegScreen extends Component {
     this.state={errormessage7: ""}
     this.state={errormessage8: ""}
     this.state={errormessage9: ""}
+    this.state={errormessage10: ""}
   }
   errorbademail(){
     this.setState({errormessage1: "Nesprávny tvar emailu"})
@@ -48,6 +49,9 @@ class RegScreen extends Component {
   }
   errordate(){
     this.setState({errormessage8: "Nesprávny tvar. Zadajte v tvare RRRR-MM-DD"})
+  }
+  errordate2(){
+    this.setState({errormessage10: "Toto pole je povinné"})
   }
   errorunder18(){
     this.setState({errormessage9: "Je potrebné mať aspoň 18 rokov"})
@@ -121,7 +125,7 @@ class RegScreen extends Component {
                 placeholder="1998-12-25"
                 label="Dátum narodenia"
               />   
-              <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errormessage8} {this.state.errormessage9}</Text>
+              <Text style={{ fontSize: 12, color: 'red', alignSelf: 'flex-end' }}>{this.state.errormessage8} {this.state.errormessage9} {this.state.errormessage10}</Text>
             </View>
             <View style={styles.box, styles.box_quartersecond}>
               <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -176,13 +180,18 @@ class RegScreen extends Component {
             this.setState({errormessage7: ""});
             this.setState({errormessage8: ""});
             this.setState({errormessage9: ""});
+            this.setState({errormessage10: ""});
             if (values['password'] != values['password2']){
               this.errorpassword();
             }
             if(errorMes["errors"]["birth"] != undefined){
-              if("Date has wrong format. Use one of these formats instead: YYYY-MM-DD." == errorMes["errors"]["birth"]){
+              if("Date has wrong format. Use one of these formats instead: YYYY-MM-DD." == errorMes["errors"]["birth"] && values['birth']!=""){
                 this.errordate();
-              }}
+              }
+              if(values['birth'] == "" && "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." == errorMes["errors"]["birth"]){
+                this.errordate2();
+              }
+            }
             if("Not adult" == errorMes["errors"]){
               this.errorunder18();
             }
