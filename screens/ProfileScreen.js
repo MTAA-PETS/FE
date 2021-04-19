@@ -170,7 +170,7 @@ class ProfileScreen extends Component {
           <View style={styles.box, styles.box_second}>
               <View style={styles.data}>
                 <Text style={styles.title}>Osobné údaje</Text>
-                <TouchableOpacity style = {{width: 90, height: 110, backgroundColor: 'gray', borderRadius: 10, justifyContent: 'center', alignSelf:'center'}} onPress={this._pickImage}>
+                <TouchableOpacity style = {{width: 90, height: 110, backgroundColor: 'gray', borderRadius: 10, justifyContent: 'center', alignSelf:'center', marginBottom: 30}} onPress={this._pickImage}>
                   <Text style = {{textAlign: 'center'}}>{this.state.profile}</Text>
                   {image && <Image source={{ uri: image }} style={{ width: 90, height: 110, resizeMode: 'cover' }} />}
                 </TouchableOpacity>
