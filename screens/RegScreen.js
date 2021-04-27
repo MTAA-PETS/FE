@@ -163,7 +163,7 @@ class RegScreen extends Component {
             return result.json();
         })
         .then(result => {
-            global.idcko = result['id'];
+            global.idcko = result;
             console.log(result);
             this.props.navigation.navigate('MainScreen');
         })
